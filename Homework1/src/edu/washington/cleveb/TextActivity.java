@@ -42,6 +42,8 @@ public class TextActivity extends Activity {
 				// TODO Auto-generated method stub
 				// put the task in the background so we go back to the home screen
 				moveTaskToBack(true);
+				// finish this activity so when the app is restarted it will be on the home activity
+				finish();
 			}
 		});
     }

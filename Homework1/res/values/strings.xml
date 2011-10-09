@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Homework1Activity!</string>
+    <string name="hello">Hello user!</string>
     <string name="TextButton">Random Text</string>
-    <string name="app_name">Homework1</string>
+    <string name="app_name">cleveb_hw1</string>
     <string name="quit">Quit</string>
     <string-array name="random_strings">
     	<item >I like turtles!</item>
