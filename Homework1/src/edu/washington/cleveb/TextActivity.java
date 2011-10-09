@@ -3,6 +3,7 @@ package edu.washington.cleveb;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,22 @@ public class TextActivity extends Activity {
     private Button quitButton;
     private TextView randomTextView;
     
+    // this will handle the quit button click
+    private View.OnClickListener quitListener = new View.OnClickListener() {
+		
+		public void onClick(View v) {
+			// create an intent that will launch the OS home screen
+			Intent i = new Intent(Intent.ACTION_MAIN);
+			i.addCategory(Intent.CATEGORY_HOME);
+			
+			// start the intent
+			startActivity( i );
+			
+			// finish this activity so when the app is restarted it will be on the home activity
+			finish();	
+		}
+	};
+	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,15 +53,6 @@ public class TextActivity extends Activity {
         
         // setup the quit button
         quitButton = (Button) findViewById( R.id.quit_button );
-        quitButton.setOnClickListener( new View.OnClickListener() {
-			
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				// put the task in the background so we go back to the home screen
-				moveTaskToBack(true);
-				// finish this activity so when the app is restarted it will be on the home activity
-				finish();
-			}
-		});
+        quitButton.setOnClickListener( quitListener );
     }
 }
