@@ -11,4 +11,6 @@
     />
 <Button android:text="@string/TextButton" android:layout_height="wrap_content" android:layout_weight="0.01" android:id="@+id/activity_switcher" android:layout_width="fill_parent"></Button>
 </LinearLayout>
+   
+
 
