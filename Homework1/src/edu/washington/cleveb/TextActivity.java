@@ -37,7 +37,7 @@ public class TextActivity extends Activity {
     
         // set the content view
         setContentView( R.layout.textlayout );
-    
+        
         // get the string array
         Resources res = getResources();
         String[] random_text = res.getStringArray( R.array.random_strings );
@@ -50,7 +50,7 @@ public class TextActivity extends Activity {
         
         // set the text to a random value
         randomTextView.setText( random_text[rand.nextInt(random_text.length)] );
-        
+      
         // setup the quit button
         quitButton = (Button) findViewById( R.id.quit_button );
         quitButton.setOnClickListener( quitListener );
