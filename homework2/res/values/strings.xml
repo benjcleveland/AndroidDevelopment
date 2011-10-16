@@ -2,4 +2,15 @@
 <resources>
     <string name="hello">Hello World, Homework2Activity!</string>
     <string name="app_name">Homework2</string>
+    <string name="add_button">Add Text</string>
+    <string-array name="text_string_list">
+    	<item>I like to play in the grass</item>
+    	<item>Who do you think you are?</item>
+    	<item>Where are you going?</item>
+    	<item>A man when to the store to pick up some food for his family but he didn\'t know what to get and didn\'t have any money anyway.</item>
+    	<item>who does not like a good list view?</item>
+    	<item>Did you get the keys to the car?</item>
+    	<item>Hi, what is your name?</item>
+    	<item>I like to play board games!!</item>
+    </string-array>
 </resources>
