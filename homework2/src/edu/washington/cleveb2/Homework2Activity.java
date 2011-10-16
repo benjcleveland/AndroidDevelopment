@@ -1,4 +1,4 @@
-package edu.washington.cleveb;
+package edu.washington.cleveb2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import edu.washington.cleveb2.R;
 
 public class Homework2Activity extends Activity {
  
