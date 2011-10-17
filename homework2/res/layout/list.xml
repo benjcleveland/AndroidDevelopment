@@ -4,12 +4,12 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent" android:weightSum="1">
-    <ListView android:layout_width="match_parent" android:layout_height="354dp" android:layout_weight="0.50" android:id="@+id/itemlistview" >
-        <!-- Preview: listitem=@android:layout/simple_list_item_2 -->
-    </ListView>
-    <EditText android:layout_height="wrap_content" android:inputType="textMultiLine" android:layout_weight="0.58" android:layout_width="match_parent" android:id="@+id/edit_text" android:gravity="top" android:layout_alignParentBottom="true">
+    <EditText android:lines="3" android:id="@+id/edit_text" android:inputType="textMultiLine" android:layout_height="wrap_content" android:gravity="top" android:layout_width="match_parent">
         <requestFocus></requestFocus>
     </EditText>
-    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/add_button" android:id="@+id/add_text_button"></Button>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/add_text_button" android:layout_gravity="right" android:text="@string/add_button" android:layout_weight="0.58"></Button>
+    <ListView android:id="@+id/itemlistview" android:layout_height="354dp" android:layout_width="wrap_content" android:headerDividersEnabled="true">
+        <!-- Preview: listitem=@android:layout/simple_list_item_1 -->
+    </ListView>
     
 </LinearLayout>
