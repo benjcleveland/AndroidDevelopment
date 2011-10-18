@@ -29,7 +29,6 @@ import edu.washington.cleveb2.R;
 
 public class Homework2Activity extends ListActivity {
 
-	private ListView listview;
 	private Button add_text_button;
 	private ratingListAdapter list_adapter;
 	private ArrayList<HashMap<String, Object>> list_array = new ArrayList<HashMap<String, Object>>();
@@ -63,9 +62,7 @@ public class Homework2Activity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.list);
 		
-		// get the list view
-		//listview = (ListView) findViewById(R.id.list);
-		listview = getListView();
+		getListView();
 		
 		// create the list adapter
 		list_adapter = new ratingListAdapter( list_array, this);
@@ -174,8 +171,6 @@ public class Homework2Activity extends ListActivity {
 		}
 		else
 		{
-		
-
 			FileInputStream fis = null;
 			try {
 				fis = openFileInput("saved_ratings");
@@ -198,7 +193,7 @@ public class Homework2Activity extends ListActivity {
 				for(int i = 0; i < count; ++i )
 				{
 					// add the item to the list array
-					list_array.add((HashMap<String, Object>) ois.readObject());
+					list_array.add( (HashMap<String, Object>) ois.readObject());
 				}
 			} catch (OptionalDataException e) {
 				// TODO Auto-generated catch block
@@ -236,13 +231,16 @@ public class Homework2Activity extends ListActivity {
 		private ArrayList<HashMap<String, Object>> List;
 
 		private LayoutInflater mInflater;
-
+		
+		class ViewHolder {
+			TextView text;
+			RatingBar rating;
+		}
 		
 		public ratingListAdapter(ArrayList<HashMap<String, Object>> list, Context context) {
 			List = list;
 			mInflater = LayoutInflater.from(context);
 		}
-
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -275,12 +273,6 @@ public class Homework2Activity extends ListActivity {
 			holder.rating.setRating( (Float) List.get(position).get("rating"));
 
 			return convertView;
-
-		}
-
-		class ViewHolder {
-			TextView text;
-			RatingBar rating;
 		}
 
 		public int getCount() {
@@ -298,5 +290,4 @@ public class Homework2Activity extends ListActivity {
 			return arg0;
 		}
 	}
-
 }
