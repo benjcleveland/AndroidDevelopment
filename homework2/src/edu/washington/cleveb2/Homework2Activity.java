@@ -148,6 +148,8 @@ public class Homework2Activity extends ListActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// make sure we clear the array out
+		list_array.clear();
 	}
 
 
