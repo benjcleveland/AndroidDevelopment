@@ -13,4 +13,5 @@
     	<item>Hi, what is your name?</item>
     	<item>I like to play board games!!</item>
     </string-array>
+    <string name="rating_text">Please enter your rating for:</string>
 </resources>

@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,8 @@ public class Homework2Activity extends ListActivity {
 	private ratingListAdapter list_adapter;
 	private ArrayList<HashMap<String, Object>> list_array = new ArrayList<HashMap<String, Object>>();
 
+	static final int SET_QUOTE_RATING = 0;
+	
 	// handler for adding text
 	private View.OnClickListener addTextListener = new View.OnClickListener() {
 
@@ -74,6 +77,59 @@ public class Homework2Activity extends ListActivity {
 		// setup the add text button
 		add_text_button = (Button) findViewById(R.id.add_text_button);
 		add_text_button.setOnClickListener(addTextListener);
+		
+		SharedPreferences prefs = getPreferences( MODE_PRIVATE ); 
+		int count = prefs.getInt("count", 0);
+		
+		// we don't have anything saved - get the default from the strings.xml
+		if( count == 0 )
+		{
+			// get the string array
+			for( String str : getResources().getStringArray( R.array.text_string_list ) ) 
+			{
+				// initialize the array with values
+				add_to_list( str );
+			}
+		}
+		else
+		{
+			FileInputStream fis = null;
+			try {
+				fis = openFileInput("saved_ratings");
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ObjectInputStream ois = null;
+			try {
+				ois = new ObjectInputStream( fis );
+			} catch (StreamCorruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				// get all the items in the list array
+				for(int i = 0; i < count; ++i )
+				{
+					// add the item to the list array
+					list_array.add( (HashMap<String, Object>) ois.readObject());
+				}
+			} catch (OptionalDataException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// notify the listview that the list has been changed
+		list_adapter.notifyDataSetChanged();
 	}
 	
 	// update the rating when the user clicks on the list item
@@ -82,9 +138,37 @@ public class Homework2Activity extends ListActivity {
 	{
 		HashMap<String,Object> hm = list_array.get(position);
 		
-		hm.put("rating", (float)3.5);
 		
-		list_adapter.notifyDataSetChanged();
+		// create a new activity to rate the quote
+		Intent intent = new Intent(getBaseContext(), RateItem.class );
+		
+		// pass the needed data to the rating activity
+		intent.putExtra("QUOTE_TEXT", (String)hm.get("text"));
+		intent.putExtra("QUOTE_RATING", (Float) hm.get("rating"));
+		intent.putExtra("POSITION", (int)position);
+		
+		// start the rating activity
+		startActivityForResult(intent, SET_QUOTE_RATING);
+		
+		//hm.put("rating", (float)3.5);
+		
+		//list_adapter.notifyDataSetChanged();
+	}
+	
+	// handle the result from any activities
+	protected void onActivityResult( int requestCode, int resultCode, Intent data )
+	{
+		// this result came from the quote rating activity
+		if( requestCode == SET_QUOTE_RATING )
+		{
+			int position = data.getIntExtra("POSITION", 0);
+			
+			HashMap<String,Object> hm = list_array.get(position);
+			hm.put("rating", data.getFloatExtra("QUOTE_RATING",0));
+			
+			// tell the list adapter to update
+			list_adapter.notifyDataSetChanged();
+		}
 	}
 	
 	// override to handle saving things that the user added
@@ -145,69 +229,6 @@ public class Homework2Activity extends ListActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// make sure we clear the array out
-		list_array.clear();
-	}
-
-
-	// override to handle saving things that the user added
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		
-		SharedPreferences prefs = getPreferences( MODE_PRIVATE ); 
-		int count = prefs.getInt("count", 0);
-		
-		// we don't have anything saved - get the default from the strings.xml
-		if( count == 0 )
-		{
-			// get the string array
-			for( String str : getResources().getStringArray( R.array.text_string_list ) ) 
-			{
-				// initialize the array with values
-				add_to_list( str );
-			}
-		}
-		else
-		{
-			FileInputStream fis = null;
-			try {
-				fis = openFileInput("saved_ratings");
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			ObjectInputStream ois = null;
-			try {
-				ois = new ObjectInputStream( fis );
-			} catch (StreamCorruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				// get all the items in the list array
-				for(int i = 0; i < count; ++i )
-				{
-					// add the item to the list array
-					list_array.add( (HashMap<String, Object>) ois.readObject());
-				}
-			} catch (OptionalDataException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		// notify the listview that the list has been changed
-		list_adapter.notifyDataSetChanged();
 	}
 
 	// adds a string to the list view
