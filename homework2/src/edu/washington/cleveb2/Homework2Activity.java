@@ -11,6 +11,7 @@ import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -42,14 +44,22 @@ public class Homework2Activity extends ListActivity {
 		public void onClick(View v) {
 			// get text from the text field
 			EditText text = (EditText) findViewById(R.id.edit_text);
+
+			String new_string = text.getText().toString();
 			
 			// add the text to the list
 			// the initial rating should be 0
-			add_to_list(text.getText().toString());
+			add_to_list(new_string);
 
 			// notify the listview that the list has been changed
 			list_adapter.notifyDataSetChanged();
 
+			// give a message to the user that the text was added
+			if( new_string.length() > 0 )
+			{
+				Toast.makeText(getBaseContext(), "You added: " + new_string, Toast.LENGTH_SHORT).show();
+			}
+			
 			// clear the text box
 			text.setText("");
 
@@ -138,7 +148,11 @@ public class Homework2Activity extends ListActivity {
 	{
 		HashMap<String,Object> hm = list_array.get(position);
 		
-		
+		// hide the keyboard now that the user is done
+		EditText text = (EditText) findViewById(R.id.edit_text);
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
+
 		// create a new activity to rate the quote
 		Intent intent = new Intent(getBaseContext(), RateItem.class );
 		
@@ -159,7 +173,7 @@ public class Homework2Activity extends ListActivity {
 	protected void onActivityResult( int requestCode, int resultCode, Intent data )
 	{
 		// this result came from the quote rating activity
-		if( requestCode == SET_QUOTE_RATING )
+		if( requestCode == SET_QUOTE_RATING && resultCode == Activity.RESULT_OK )
 		{
 			int position = data.getIntExtra("POSITION", 0);
 			
@@ -195,7 +209,6 @@ public class Homework2Activity extends ListActivity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 		ObjectOutputStream oos = null;
 		try {

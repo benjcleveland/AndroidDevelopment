@@ -3,19 +3,35 @@ package edu.washington.cleveb2;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 
 public class RateItem extends Activity{
 
 	private TextView quoteTextView;
 	private RatingBar quoteRating;
+	private Intent resultIntent = new Intent();
+	
+	private OnRatingBarChangeListener ratingListener = new RatingBar.OnRatingBarChangeListener() {
+		
+		public void onRatingChanged(RatingBar ratingBar, float rating,
+				boolean fromUser) {
+			
+			// save the rating
+			resultIntent.putExtra("QUOTE_RATING", rating);
+			// setup the return data
+			setResult(Activity.RESULT_OK, resultIntent);
+			finish();
+		}
+	};
 	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		// set the layout for this activity
 		setContentView(R.layout.rate_item);
 		
 		// get the info from the intent
@@ -28,10 +44,12 @@ public class RateItem extends Activity{
 			quoteRating = (RatingBar) findViewById( R.id.quote_rating_bar );
 			quoteRating.setRating(extras.getFloat("QUOTE_RATING"));
 			
-			Intent resultIntent = new Intent();
+			// setup the quote rating handler
+			quoteRating.setOnRatingBarChangeListener( ratingListener );
+			
+			// make sure we save the position
 			resultIntent.putExtra("POSITION", (int)extras.getInt("POSITION"));
-			resultIntent.putExtra("QUOTE_RATING", (float)5);
-			setResult(1, resultIntent);
+			resultIntent.putExtra("QUOTE_RATING", extras.getFloat("QUOTE_RATING"));
 		}
 	}
 }

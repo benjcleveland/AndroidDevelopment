@@ -4,7 +4,7 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-    <TextView android:layout_height="wrap_content" android:text="TextView" android:id="@+id/textView1" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"></TextView>
-    <RatingBar android:layout_height="wrap_content" android:id="@+id/ratingBar1" android:layout_width="wrap_content" android:layout_below="@+id/textView1" android:layout_alignParentLeft="true" android:isIndicator="true"  style="?android:attr/ratingBarStyleSmall"></RatingBar>
+    <TextView android:layout_height="wrap_content" android:text="TextView" android:id="@+id/textView1" android:layout_width="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_alignParentTop="true" android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/ratingBar1"></TextView>
+    <RatingBar android:id="@+id/ratingBar1" android:isIndicator="true" style="?android:attr/ratingBarStyleSmall" android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_alignBottom="@+id/textView1" android:layout_alignParentRight="true"></RatingBar>
     
 </RelativeLayout>
