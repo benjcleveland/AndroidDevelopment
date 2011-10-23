@@ -19,7 +19,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,44 +44,34 @@ public class Homework2Activity extends ListActivity {
 		public void onClick(View v) {
 			
 			EditText text = (EditText) findViewById(R.id.edit_text);
+
+			// get text from the text field
+			String new_string = text.getText().toString();
+
+			// add the text to the list
+			// the initial rating should be 0
+			add_to_list(new_string);
+
+			// notify the listview that the list has been changed
+			list_adapter.notifyDataSetChanged();
+
+			// give a message to the user that the text was added
+			if (new_string.length() > 0) {
+				Toast.makeText(getBaseContext(), "You added: " + new_string,
+						Toast.LENGTH_SHORT).show();
+			}
+
+			// clear the text box
+			text.setText("");
 			
-			if( text.getVisibility() == View.GONE )
-			{
-				text.setVisibility(View.VISIBLE);
-				text.requestFocus();
-				// show the keyboard
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.showSoftInput(text, 0);
-			}
-			else
-			{
-				// get text from the text field
-				String new_string = text.getText().toString();
-
-				// add the text to the list
-				// the initial rating should be 0
-				add_to_list(new_string);
-
-				// notify the listview that the list has been changed
-				list_adapter.notifyDataSetChanged();
-
-				// give a message to the user that the text was added
-				if (new_string.length() > 0) {
-					Toast.makeText(getBaseContext(),
-							"You added: " + new_string, Toast.LENGTH_SHORT)
-							.show();
-				}
-
-				// clear the text box
-				text.setText("");
-
-				// hide the keyboard now that the user is done
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
-
-				// make the text box disappear
-				text.setVisibility(View.GONE);
-			}
+			// hide the keyboard now that the user is done
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
+			
+			text.clearFocus();
+			
+			// make the add text button invisible
+			add_text_button.setVisibility( View.GONE );	
 		}
 	};
 
@@ -107,6 +96,30 @@ public class Homework2Activity extends ListActivity {
 		
 		SharedPreferences prefs = getPreferences( MODE_PRIVATE ); 
 		int count = prefs.getInt("count", 0);
+		
+		EditText text = (EditText) findViewById(R.id.edit_text);
+		// setup the on focus listener for the text box
+		text.setOnFocusChangeListener( new View.OnFocusChangeListener() {
+			
+			public void onFocusChange(View v, boolean hasFocus) {
+				
+				EditText text = (EditText) findViewById(R.id.edit_text);
+				// make sure the add button is visible if the text box has text or focus
+				if( hasFocus || text.getText().length() > 0 )
+				{	
+					// make the add text button visible
+					add_text_button.setVisibility( View.VISIBLE );
+				}
+				else
+				{
+					// make the add text button invisible
+					add_text_button.setVisibility( View.GONE );	
+				}
+			}
+		});
+		
+		// make sure the edit text does not have focus
+		text.clearFocus();
 		
 		// we don't have anything saved - get the default from the strings.xml
 		if( count == 0 )
@@ -166,6 +179,7 @@ public class Homework2Activity extends ListActivity {
 		HashMap<String,Object> hm = list_array.get(position);
 		
 		// hide the keyboard now that the user is done
+		// TODO - make sure the keyboard is displayed when the user comes back to the activity
 		EditText text = (EditText) findViewById(R.id.edit_text);
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
