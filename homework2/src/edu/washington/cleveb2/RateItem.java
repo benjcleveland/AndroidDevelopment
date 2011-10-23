@@ -22,6 +22,8 @@ public class RateItem extends Activity{
 			resultIntent.putExtra("QUOTE_RATING", rating);
 			// setup the return data
 			setResult(Activity.RESULT_OK, resultIntent);
+			
+			// end the activity
 			finish();
 		}
 	};

@@ -19,6 +19,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,30 +43,46 @@ public class Homework2Activity extends ListActivity {
 	private View.OnClickListener addTextListener = new View.OnClickListener() {
 
 		public void onClick(View v) {
-			// get text from the text field
+			
 			EditText text = (EditText) findViewById(R.id.edit_text);
-
-			String new_string = text.getText().toString();
 			
-			// add the text to the list
-			// the initial rating should be 0
-			add_to_list(new_string);
-
-			// notify the listview that the list has been changed
-			list_adapter.notifyDataSetChanged();
-
-			// give a message to the user that the text was added
-			if( new_string.length() > 0 )
+			if( text.getVisibility() == View.GONE )
 			{
-				Toast.makeText(getBaseContext(), "You added: " + new_string, Toast.LENGTH_SHORT).show();
+				text.setVisibility(View.VISIBLE);
+				text.requestFocus();
+				// show the keyboard
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.showSoftInput(text, 0);
 			}
-			
-			// clear the text box
-			text.setText("");
+			else
+			{
+				// get text from the text field
+				String new_string = text.getText().toString();
 
-			// hide the keyboard now that the user is done
-			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
+				// add the text to the list
+				// the initial rating should be 0
+				add_to_list(new_string);
+
+				// notify the listview that the list has been changed
+				list_adapter.notifyDataSetChanged();
+
+				// give a message to the user that the text was added
+				if (new_string.length() > 0) {
+					Toast.makeText(getBaseContext(),
+							"You added: " + new_string, Toast.LENGTH_SHORT)
+							.show();
+				}
+
+				// clear the text box
+				text.setText("");
+
+				// hide the keyboard now that the user is done
+				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
+
+				// make the text box disappear
+				text.setVisibility(View.GONE);
+			}
 		}
 	};
 
@@ -163,10 +180,6 @@ public class Homework2Activity extends ListActivity {
 		
 		// start the rating activity
 		startActivityForResult(intent, SET_QUOTE_RATING);
-		
-		//hm.put("rating", (float)3.5);
-		
-		//list_adapter.notifyDataSetChanged();
 	}
 	
 	// handle the result from any activities

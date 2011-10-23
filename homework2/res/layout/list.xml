@@ -4,10 +4,10 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent" android:weightSum="1">
-    <EditText android:lines="3" android:id="@+id/edit_text" android:inputType="textMultiLine" android:layout_height="wrap_content" android:gravity="top" android:layout_width="match_parent">
+    <EditText android:lines="3" android:id="@+id/edit_text" android:inputType="textMultiLine" android:layout_height="wrap_content" android:gravity="top" android:layout_width="match_parent" android:visibility="gone">
         <requestFocus></requestFocus>
     </EditText>
-    <Button android:layout_height="wrap_content" android:id="@+id/add_text_button" android:layout_gravity="right" android:text="@string/add_button" android:layout_width="match_parent"></Button>
+    <Button android:id="@+id/add_text_button" android:layout_width="match_parent" android:text="@string/add_button" android:layout_gravity="right" android:layout_height="wrap_content"></Button>
     <ListView android:headerDividersEnabled="true" android:id="@android:id/list" android:layout_width="match_parent" android:layout_height="wrap_content">
         <!-- Preview: listitem=@android:layout/simple_list_item_1 -->
     </ListView>
