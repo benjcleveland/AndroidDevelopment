@@ -13,13 +13,17 @@ public class RateItem extends Activity{
 	private RatingBar quoteRating;
 	private Intent resultIntent = new Intent();
 	
+	private static final String TEXT_KEY = "text";
+	private static final String RATING_KEY = "joke_rating";
+	private static final String POSITION_KEY = "position";
+	
 	private OnRatingBarChangeListener ratingListener = new RatingBar.OnRatingBarChangeListener() {
 		
 		public void onRatingChanged(RatingBar ratingBar, float rating,
 				boolean fromUser) {
 			
 			// save the rating
-			resultIntent.putExtra("QUOTE_RATING", rating);
+			resultIntent.putExtra(RATING_KEY, rating);
 			// setup the return data
 			setResult(Activity.RESULT_OK, resultIntent);
 			
@@ -41,17 +45,17 @@ public class RateItem extends Activity{
 		if( extras != null )
 		{
 			quoteTextView = (TextView) findViewById( R.id.quote_text );
-			quoteTextView.setText(extras.getString("QUOTE_TEXT"));
+			quoteTextView.setText(extras.getString(TEXT_KEY));
 			
 			quoteRating = (RatingBar) findViewById( R.id.quote_rating_bar );
-			quoteRating.setRating(extras.getFloat("QUOTE_RATING"));
+			quoteRating.setRating(extras.getFloat(RATING_KEY));
 			
 			// setup the quote rating handler
 			quoteRating.setOnRatingBarChangeListener( ratingListener );
 			
 			// make sure we save the position
-			resultIntent.putExtra("POSITION", (int)extras.getInt("POSITION"));
-			resultIntent.putExtra("QUOTE_RATING", extras.getFloat("QUOTE_RATING"));
+			resultIntent.putExtra(POSITION_KEY, (int)extras.getInt(POSITION_KEY));
+			resultIntent.putExtra(RATING_KEY, extras.getFloat(RATING_KEY));
 		}
 	}
 }

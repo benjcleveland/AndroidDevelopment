@@ -35,8 +35,14 @@ public class Homework2Activity extends ListActivity {
 	private Button add_text_button;
 	private ratingListAdapter list_adapter;
 	private ArrayList<HashMap<String, Object>> list_array = new ArrayList<HashMap<String, Object>>();
-
-	static final int SET_QUOTE_RATING = 0;
+	
+	private static final int SET_QUOTE_RATING = 0;
+	private static final String FILENAME = "SAVED_JOKES";
+	
+	private static final String TEXT_KEY = "text";
+	private static final String RATING_KEY = "joke_rating";
+	private static final String POSITION_KEY = "position";
+	private static final String JOKE_COUNT_KEY = "joke_count";
 	
 	// handler for adding text
 	private View.OnClickListener addTextListener = new View.OnClickListener() {
@@ -67,11 +73,6 @@ public class Homework2Activity extends ListActivity {
 			// hide the keyboard now that the user is done
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(text.getWindowToken(), 0);
-			
-			text.clearFocus();
-			
-			// make the add text button invisible
-			add_text_button.setVisibility( View.GONE );	
 		}
 	};
 
@@ -95,31 +96,7 @@ public class Homework2Activity extends ListActivity {
 		add_text_button.setOnClickListener(addTextListener);
 		
 		SharedPreferences prefs = getPreferences( MODE_PRIVATE ); 
-		int count = prefs.getInt("count", 0);
-		
-		EditText text = (EditText) findViewById(R.id.edit_text);
-		// setup the on focus listener for the text box
-		text.setOnFocusChangeListener( new View.OnFocusChangeListener() {
-			
-			public void onFocusChange(View v, boolean hasFocus) {
-				
-				EditText text = (EditText) findViewById(R.id.edit_text);
-				// make sure the add button is visible if the text box has text or focus
-				if( hasFocus || text.getText().length() > 0 )
-				{	
-					// make the add text button visible
-					add_text_button.setVisibility( View.VISIBLE );
-				}
-				else
-				{
-					// make the add text button invisible
-					add_text_button.setVisibility( View.GONE );	
-				}
-			}
-		});
-		
-		// make sure the edit text does not have focus
-		text.clearFocus();
+		int count = prefs.getInt(JOKE_COUNT_KEY, 0);
 		
 		// we don't have anything saved - get the default from the strings.xml
 		if( count == 0 )
@@ -135,7 +112,7 @@ public class Homework2Activity extends ListActivity {
 		{
 			FileInputStream fis = null;
 			try {
-				fis = openFileInput("saved_ratings");
+				fis = openFileInput(FILENAME);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -155,6 +132,7 @@ public class Homework2Activity extends ListActivity {
 				for(int i = 0; i < count; ++i )
 				{
 					// add the item to the list array
+					// ignore the warning, we should be ok
 					list_array.add( (HashMap<String, Object>) ois.readObject());
 				}
 			} catch (OptionalDataException e) {
@@ -168,6 +146,7 @@ public class Homework2Activity extends ListActivity {
 				e.printStackTrace();
 			}
 		}
+		
 		// notify the listview that the list has been changed
 		list_adapter.notifyDataSetChanged();
 	}
@@ -188,9 +167,9 @@ public class Homework2Activity extends ListActivity {
 		Intent intent = new Intent(getBaseContext(), RateItem.class );
 		
 		// pass the needed data to the rating activity
-		intent.putExtra("QUOTE_TEXT", (String)hm.get("text"));
-		intent.putExtra("QUOTE_RATING", (Float) hm.get("rating"));
-		intent.putExtra("POSITION", (int)position);
+		intent.putExtra(TEXT_KEY, (String)hm.get(TEXT_KEY));
+		intent.putExtra(RATING_KEY, (Float) hm.get(RATING_KEY));
+		intent.putExtra(POSITION_KEY, (int)position);
 		
 		// start the rating activity
 		startActivityForResult(intent, SET_QUOTE_RATING);
@@ -202,10 +181,10 @@ public class Homework2Activity extends ListActivity {
 		// this result came from the quote rating activity
 		if( requestCode == SET_QUOTE_RATING && resultCode == Activity.RESULT_OK )
 		{
-			int position = data.getIntExtra("POSITION", 0);
+			int position = data.getIntExtra(POSITION_KEY, 0);
 			
 			HashMap<String,Object> hm = list_array.get(position);
-			hm.put("rating", data.getFloatExtra("QUOTE_RATING",0));
+			hm.put(RATING_KEY, data.getFloatExtra(RATING_KEY,0));
 			
 			// tell the list adapter to update
 			list_adapter.notifyDataSetChanged();
@@ -222,16 +201,15 @@ public class Homework2Activity extends ListActivity {
 		SharedPreferences.Editor editor = getPreferences( MODE_PRIVATE ).edit();
 		
 		// save the count of the array
-		editor.putInt("count", list_array.size());
+		editor.putInt(JOKE_COUNT_KEY, list_array.size());
 		
 		// finally commit the count
 		editor.commit();
 		
-		// this is kindof of lame but is should work
-				
+		// this is kindof of lame but is should work			
 		FileOutputStream fos = null;
 		try {
-			fos = openFileOutput( "saved_ratings", MODE_PRIVATE );
+			fos = openFileOutput( FILENAME, MODE_PRIVATE );
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -280,14 +258,15 @@ public class Homework2Activity extends ListActivity {
 			// create a hash map for the object
 			HashMap<String, Object> hm;
 			hm = new HashMap<String, Object>();
-			hm.put("text", str);
-			hm.put("rating", (float) 0);
+			hm.put(TEXT_KEY, str);
+			hm.put(RATING_KEY, (float) 0);
 			
 			// add this to the array
 			list_array.add(hm);	
 		}
 	}
-
+	
+	// create our own list adapter so we can have a rating bar
 	private class ratingListAdapter extends BaseAdapter{
 		private ArrayList<HashMap<String, Object>> List;
 
@@ -330,8 +309,8 @@ public class Homework2Activity extends ListActivity {
 			}
 
 			// Bind the data efficiently with the holder.
-			holder.text.setText((String) List.get(position).get("text"));
-			holder.rating.setRating( (Float) List.get(position).get("rating"));
+			holder.text.setText((String) List.get(position).get(TEXT_KEY));
+			holder.rating.setRating( (Float) List.get(position).get(RATING_KEY));
 
 			return convertView;
 		}
