@@ -3,6 +3,7 @@ package com.washington.cleveb1;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.BaseColumns;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +23,18 @@ public class BoatListActivity extends ListActivity {
     private SQLiteDatabase database;
 	private CursorAdapter dataSource;
 	
+	private Dialog mSplashScreen;
+	
 	private static final String fields[] = { "title", "price", "preview", BaseColumns._ID };
 	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // show the splash screen
+        showSplashScreen();
+
         setContentView(R.layout.main);
         
         BoatDatabase boatdb = new BoatDatabase( this );
@@ -39,6 +47,26 @@ public class BoatListActivity extends ListActivity {
         
         // connect the database to the list
         setListAdapter(dataSource);
+    }
+    
+    // display the splash screen
+    private void showSplashScreen(){
+    	mSplashScreen = new Dialog( this, R.style.splashscreen );
+    	
+    	mSplashScreen.setContentView(R.layout.splashscreen);
+    	mSplashScreen.show();
+    	
+    	// make the splash screen go away after a set amount of time
+    	final Handler handler = new Handler();
+    	handler.postDelayed( new Runnable()
+    	{
+    		public void run() {
+    			if( mSplashScreen != null)
+    			{
+    				mSplashScreen.dismiss();
+    			}
+    		}
+    	}, 3000);
     }
     
     
