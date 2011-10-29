@@ -15,12 +15,15 @@ public class BoatDatabase extends SQLiteOpenHelper  {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		db.execSQL("CREATE TABLE IF NOT EXISTS boats (" 
-				+ BaseColumns._ID
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, price INTEGER)");
 		
-		db.execSQL( "insert into boats (title, price) VALUES ('awesome boat', 1)");
-		db.execSQL( "insert into boats (title, price) VALUES ('An even better boat awesome boat', 2)");
+		//"IF NOT EXISTS"
+		db.execSQL("CREATE TABLE boats (" 
+				+ BaseColumns._ID
+				+ " INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, price INTEGER, preview VARCHAR)");
+		
+		// add entries to the database
+		db.execSQL( "insert into boats (title, price, preview) VALUES ('awesome boat', 150000, 'powerboat.png')");
+		db.execSQL( "insert into boats (title, price, preview) VALUES ('An even better boat awesome boat', 20000, 'sailboat.png')");
 	}
 
 	@Override
