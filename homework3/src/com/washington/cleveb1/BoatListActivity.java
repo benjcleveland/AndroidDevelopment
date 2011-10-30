@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -46,9 +47,20 @@ public class BoatListActivity extends ListActivity {
     
         // create a simple cursor adapter
         dataSource = new PictureAdapter( this, R.layout.list_row, data, fields, new int[] { R.id.title, R.id.cost, R.id.description} );
-        
+
         // connect the database to the list
         setListAdapter(dataSource);
+    }
+    
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id)
+    {
+    	// TODO - how do we know which entry in the database this is?
+    	Cursor c = dataSource.getCursor();
+    	int i = c.getPosition();
+    	String s = c.getString(c.getColumnIndex("preview"));
+    	
+    	// start intent to handle new activity
     }
     
     // display the splash screen

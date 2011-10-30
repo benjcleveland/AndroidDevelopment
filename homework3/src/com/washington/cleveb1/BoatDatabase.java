@@ -24,9 +24,7 @@ public class BoatDatabase extends SQLiteOpenHelper  {
 		db.execSQL("CREATE TABLE boats (" 
 				+ BaseColumns._ID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, price INTEGER, preview VARCHAR, description VARCHAR)");
-		
 
-		
 		// get all the resource arrays
 		Resources res = context.getResources();
 		String[] titles = res.getStringArray(R.array.boat_titles);
