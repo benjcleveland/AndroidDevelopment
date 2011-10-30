@@ -2,6 +2,7 @@ package com.washington.cleveb1;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.NumberFormat;
 
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
 public class BoatListActivity extends ListActivity {
     private SQLiteDatabase database;
@@ -25,7 +27,7 @@ public class BoatListActivity extends ListActivity {
 	
 	private Dialog mSplashScreen;
 	
-	private static final String fields[] = { "title", "price", "preview", BaseColumns._ID };
+	private static final String fields[] = { "title", "price", "description",  "preview", BaseColumns._ID };
 	
 	/** Called when the activity is first created. */
     @Override
@@ -43,7 +45,7 @@ public class BoatListActivity extends ListActivity {
         Cursor data = database.query("boats", fields, null, null, null, null, null);
      
         // create a simple cursor adapter
-        dataSource = new PictureAdapter( this, R.layout.list_row, data, fields, new int[] { R.id.title, R.id.cost} );
+        dataSource = new PictureAdapter( this, R.layout.list_row, data, fields, new int[] { R.id.title, R.id.cost, R.id.description} );
         
         // connect the database to the list
         setListAdapter(dataSource);
@@ -70,6 +72,7 @@ public class BoatListActivity extends ListActivity {
     }
     
     
+    // extended the simple cursor adapter so we can add the image to the listview
     private class PictureAdapter extends SimpleCursorAdapter 
     {
     	private Cursor mCursor;
@@ -85,6 +88,11 @@ public class BoatListActivity extends ListActivity {
 			View row = super.getView(position, convertView, parent);
 			ImageView icon = (ImageView) row.findViewById(R.id.preview);
 
+			TextView price = (TextView) row.findViewById(R.id.cost);
+			
+			int prices = mCursor.getInt(mCursor.getColumnIndex("price"));
+			price.setText("$" + NumberFormat.getInstance().format(prices));
+			
 			// get the name of the image
 			String filename = mCursor.getString(mCursor.getColumnIndex("preview"));
 			
@@ -96,6 +104,7 @@ public class BoatListActivity extends ListActivity {
 					icon.setImageBitmap(bmap);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
+					// don't do anything for now - the default item will be displayed
 					// e.printStackTrace();
 				}
 			}
@@ -104,9 +113,8 @@ public class BoatListActivity extends ListActivity {
 		}
 		
 		// convert an asset to a bitmap
-		private Bitmap assetToBitmap( String asset_name) throws IOException
-		{
-			InputStream istr = getAssets().open( asset_name);
+		private Bitmap assetToBitmap(String asset_name) throws IOException {
+			InputStream istr = getAssets().open(asset_name);
 			Bitmap bmap = BitmapFactory.decodeStream(istr);
 			return bmap;
 		}

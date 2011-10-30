@@ -19,15 +19,19 @@ public class BoatDatabase extends SQLiteOpenHelper  {
 		//"IF NOT EXISTS"
 		db.execSQL("CREATE TABLE boats (" 
 				+ BaseColumns._ID
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, price INTEGER, preview VARCHAR)");
+				+ " INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, price INTEGER, preview VARCHAR, description VARCHAR)");
 		
 		// add entries to the database
-		db.execSQL( "insert into boats (title, price, preview) VALUES ('awesome boat', 150000, 'powerboat.png')");
-		db.execSQL( "insert into boats (title, price, preview) VALUES ('An even better boat awesome boat', 20000, 'sailboat.png')");
+		
+		// TODO - modify this to use the strings.xml file
+		
+		db.execSQL( "insert into boats (title, price, preview, description) VALUES ('awesome boat', 150000, 'powerboat.png', '2011 Avalon AMBASSADOR 2011 AVALON Ambassador , This is priced with a 150HP Honda and a black powder coated tandem EZ loader trailer with disk brakes.')");
+		db.execSQL( "insert into boats (title, price, preview, description) VALUES ('An even better boat awesome boat', 20000, 'sailboat.png', '2011 Avalon Eagle Family 2011 AVALON Eagle Family, Priced with a 15HP honda engine and an ez loader trailer')");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
+		db.execSQL("DROP TABLE boats");
 	}
 }
