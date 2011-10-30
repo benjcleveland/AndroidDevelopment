@@ -1,15 +1,19 @@
 package com.washington.cleveb1;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 public class BoatDatabase extends SQLiteOpenHelper  {
 
+	private Context context;
+	
 	public BoatDatabase(Context context)
 	{
-		super(context, "CursorDemo", null, 1);
+		super(context, "BoatSailer", null, 1);
+		this.context = context;
 	}
 
 	@Override
@@ -21,12 +25,23 @@ public class BoatDatabase extends SQLiteOpenHelper  {
 				+ BaseColumns._ID
 				+ " INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, price INTEGER, preview VARCHAR, description VARCHAR)");
 		
-		// add entries to the database
+
 		
-		// TODO - modify this to use the strings.xml file
+		// get all the resource arrays
+		Resources res = context.getResources();
+		String[] titles = res.getStringArray(R.array.boat_titles);
+		String[] previews = res.getStringArray(R.array.boat_pictures);
+		String[] descriptions = res.getStringArray(R.array.boat_description);
+		int[] prices = res.getIntArray(R.array.boat_prices);
 		
-		db.execSQL( "insert into boats (title, price, preview, description) VALUES ('awesome boat', 150000, 'powerboat.png', '2011 Avalon AMBASSADOR 2011 AVALON Ambassador , This is priced with a 150HP Honda and a black powder coated tandem EZ loader trailer with disk brakes.')");
-		db.execSQL( "insert into boats (title, price, preview, description) VALUES ('An even better boat awesome boat', 20000, 'sailboat.png', '2011 Avalon Eagle Family 2011 AVALON Eagle Family, Priced with a 15HP honda engine and an ez loader trailer')");
+		// add all the boat to the database
+		for( int i = 0; i < titles.length; ++i )
+		{
+			String sql = "insert into boats (title, price, preview, description) values ('"
+					+ titles[i] + "', " + prices[i] + ", '" + previews[i] + "', '" + descriptions[i] 
+					+ "')";
+			db.execSQL(sql);
+		}
 	}
 
 	@Override

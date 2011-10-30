@@ -43,7 +43,7 @@ public class BoatListActivity extends ListActivity {
         database = boatdb.getWritableDatabase();
         
         Cursor data = database.query("boats", fields, null, null, null, null, null);
-     
+    
         // create a simple cursor adapter
         dataSource = new PictureAdapter( this, R.layout.list_row, data, fields, new int[] { R.id.title, R.id.cost, R.id.description} );
         

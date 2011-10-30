@@ -3,5 +3,21 @@
 
     <string name="hello">Hello World, ListActivity!</string>
     <string name="app_name">Homework3</string>
+    <string-array name="boat_titles">
+        <item >Duckworth Pacific Navigator 255</item>
+        <item >Wellcraft 232 Coastal</item>
+    </string-array>
+    <integer-array name="boat_prices">
+        <item >125000</item>
+        <item >50000</item>
+    </integer-array>
+    <string-array name="boat_pictures">
+        <item >powerboat.png</item>
+        <item >sailboat.png</item>
+    </string-array>
+    <string-array name="boat_description">
+        <item >2011 Avalon AMBASSADOR 2011 AVALON Ambassador , This is priced with a 150HP Honda and a black powder coated tandem EZ loader trailer with disk brakes.</item>
+        <item >2011 Avalon Eagle Family 2011 AVALON Eagle Family, Priced with a 15HP honda engine and an ez loader trailer</item>
+    </string-array>
 
 </resources>
