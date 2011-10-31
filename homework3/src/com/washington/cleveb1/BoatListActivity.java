@@ -7,6 +7,8 @@ import java.text.NumberFormat;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -52,15 +54,28 @@ public class BoatListActivity extends ListActivity {
         setListAdapter(dataSource);
     }
     
+    // handle when the user clicks on the list view
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id)
     {
-    	// TODO - how do we know which entry in the database this is?
     	Cursor c = dataSource.getCursor();
-    	int i = c.getPosition();
-    	String s = c.getString(c.getColumnIndex("preview"));
-    	
+    	    	
     	// start intent to handle new activity
+    	Intent intent = new Intent(getBaseContext(), BoatDetailsActivity.class );
+    	
+    	// pass the information to the other activity
+    	intent.putExtra("desc", c.getString(c.getColumnIndex("description")));
+    	
+    	// start the other activity
+    	startActivity(intent);
+    }
+    
+    // this is so the splashscreen is not displayed when the user rotates the phone
+    @Override
+    public void onConfigurationChanged( Configuration newConfig )
+    {
+    	super.onConfigurationChanged(newConfig);
+    	setContentView(R.layout.main);
     }
     
     // display the splash screen
@@ -81,6 +96,18 @@ public class BoatListActivity extends ListActivity {
     			}
     		}
     	}, 3000);
+    }
+    
+    @Override
+    protected void onPause()
+    {
+    	super.onPause();
+    	
+    	// TODO - deal with the exceptions that are getting thrown when the phone is rotated.
+    	// close the data base
+    	//database.close();
+    	// close the cursor
+    	//dataSource.getCursor().close();
     }
     
     
