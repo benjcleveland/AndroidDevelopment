@@ -44,5 +44,8 @@
         <string name="welcome">Welcome To</string>
         <string name="menu_refresh">refresh</string>
         <string name="menu_search">search</string>
+        <string name="search">Search</string>
+        <string name="min_price">Select minimum price</string>
+        <string name="max_price">Set maximum price</string>
 
 </resources>

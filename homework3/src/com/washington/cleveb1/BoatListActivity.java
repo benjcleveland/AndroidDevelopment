@@ -114,6 +114,10 @@ public class BoatListActivity extends ActionBarActivity {
 
             case R.id.menu_search:
                 Toast.makeText(this, "Tapped search", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent( getBaseContext(), BoatSearchActivity.class);
+                
+                startActivityForResult(intent, 1);
+                
                 break;
         }
         return super.onOptionsItemSelected(item);
