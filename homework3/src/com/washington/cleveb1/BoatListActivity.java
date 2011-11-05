@@ -105,7 +105,6 @@ public class BoatListActivity extends ListActivity {
     	}, 3000);
     }
     
-    
     // make sure we clean everything up correctly
     @Override
     protected void onDestroy()

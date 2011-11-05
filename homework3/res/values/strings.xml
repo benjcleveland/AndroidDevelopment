@@ -2,7 +2,7 @@
 <resources>
 
     <string name="hello">Hello World, ListActivity!</string>
-    <string name="app_name">Homework3</string>
+    <string name="app_name">Boat Buyer</string>
     <string-array name="boat_titles">
         <item >Duckworth Pacific Navigator 255</item>
         <item >Wellcraft 232 Coastal</item>
@@ -41,5 +41,6 @@
     </string-array>
         <string name="details">Details: </string>
         <string name="price">Price:</string>
+        <string name="welcome">Welcome To</string>
 
 </resources>
