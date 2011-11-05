@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/FrameLayout1"
+    style="@style/page_background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
+    android:layout_height="match_parent" >
+
     <ImageView
         android:id="@+id/boat_picture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="0.81"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
         android:src="@android:drawable/alert_dark_frame" />
-
-    <TableLayout
-        android:id="@+id/tableLayout1"
+
+    <TextView
+        android:id="@+id/details_title"
+        style="@style/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#66000000" >
+        android:text="@string/app_name" />
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        style="@style/tableStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" >
+
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
+
             <TextView
                 android:id="@+id/textView1"
+                style="@style/listFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/details"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:text="@string/details" />
 
             <TextView
                 android:id="@+id/description"
+                style="@style/listFont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.19"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
+                android:text="Medium Text" />
         </TableRow>
-
+
         <TableRow
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
@@ -46,19 +55,18 @@
 
             <TextView
                 android:id="@+id/textView3"
+                style="@style/listFont"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/price"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
+                android:text="@string/price" />
+
             <TextView
                 android:id="@+id/price"
+                style="@style/listFont"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".19"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
+                android:text="Medium Text" />
         </TableRow>
 
         <TableRow

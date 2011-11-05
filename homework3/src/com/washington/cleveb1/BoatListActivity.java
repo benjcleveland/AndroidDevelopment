@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
 
+
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,6 +17,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.BaseColumns;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
@@ -24,14 +27,23 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class BoatListActivity extends ListActivity {
-    private SQLiteDatabase database;
+public class BoatListActivity extends ActionBarActivity {
+    
+	// constants
+	private static final String PREVIEW = "preview";
+	private static final String DESCRIPTION = "description";
+	private static final String PRICE = "price";
+	private static final String TITLE = "title";
+	
+	private SQLiteDatabase database;
 	private CursorAdapter dataSource;
 	
 	private Dialog mSplashScreen;
 	
-	private static final String fields[] = { "title", "price", "description",  "preview", BaseColumns._ID };
+	private static final String fields[] = { TITLE, PRICE, DESCRIPTION,  PREVIEW, BaseColumns._ID };
+	
 	private static final String TAG = "BoatListActivity";
 	
 	/** Called when the activity is first created. */
@@ -61,16 +73,17 @@ public class BoatListActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id)
     {
     	Cursor c = dataSource.getCursor();
-    	    	
+    	
     	// start intent to handle new activity
     	Intent intent = new Intent(getBaseContext(), BoatDetailsActivity.class );
     	
     	// pass the information to the other activity
-    	intent.putExtra("desc", c.getString(c.getColumnIndex("description")));
-    	intent.putExtra("picture", c.getString(c.getColumnIndex("preview")));
-    	
-    	int price = c.getInt(c.getColumnIndex("price"));
-    	intent.putExtra("price", convertDollar( price ) );
+    	intent.putExtra(DESCRIPTION, c.getString(c.getColumnIndex(DESCRIPTION)));
+    	intent.putExtra(PREVIEW, c.getString(c.getColumnIndex(PREVIEW)));
+    	intent.putExtra(TITLE, c.getString(c.getColumnIndex(TITLE)));
+
+    	int price = c.getInt(c.getColumnIndex(PRICE));
+    	intent.putExtra(PRICE, convertDollar( price ) );
     	
     	// start the other activity
     	startActivity(intent);
@@ -84,9 +97,31 @@ public class BoatListActivity extends ListActivity {
     	setContentView(R.layout.main);
     }
     
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+
+        // Calling super after populating the menu is necessary here to ensure that the
+        // action bar helpers have a chance to handle this event.
+        return super.onCreateOptionsMenu(menu);
+    }
+    
+    // handle any button clicks
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.menu_search:
+                Toast.makeText(this, "Tapped search", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     // display the splash screen
     private void showSplashScreen(){
-    	mSplashScreen = new Dialog( this, R.style.splashscreen );
+    	mSplashScreen = new Dialog( this, R.style.page_background );
     	
     	mSplashScreen.setContentView(R.layout.splashscreen);
     	mSplashScreen.setCancelable(false);
@@ -111,11 +146,13 @@ public class BoatListActivity extends ListActivity {
     {
     	super.onDestroy();
     	
+    	// close the database
     	if( database != null)
     	{
     		database.close();
     	}
     	
+    	// close the cursor
     	Cursor c = dataSource.getCursor();
     	if( c != null)
     	{
@@ -137,7 +174,6 @@ public class BoatListActivity extends ListActivity {
 				String[] from, int[] to) {
 			super(context, layout, c, from, to);
 			mCursor = c;
-			// TODO Auto-generated constructor stub
 		}
     	
 		public View getView( int position, View convertView, ViewGroup parent )
@@ -147,11 +183,12 @@ public class BoatListActivity extends ListActivity {
 
 			TextView price = (TextView) row.findViewById(R.id.cost);
 			
-			int prices = mCursor.getInt(mCursor.getColumnIndex("price"));
+			int prices = mCursor.getInt(mCursor.getColumnIndex(PRICE));
+			// this will put a $ in front of the price text
 			price.setText( convertDollar( prices ));
 			
 			// get the name of the image
-			String filename = mCursor.getString(mCursor.getColumnIndex("preview"));
+			String filename = mCursor.getString(mCursor.getColumnIndex(PREVIEW));
 			
 			if( filename != null )
 			{

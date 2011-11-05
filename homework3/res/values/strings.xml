@@ -39,8 +39,10 @@
         <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>
         <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>   
     </string-array>
-        <string name="details">Details: </string>
+        <string name="details">Details:  </string>
         <string name="price">Price:</string>
         <string name="welcome">Welcome To</string>
+        <string name="menu_refresh">refresh</string>
+        <string name="menu_search">search</string>
 
 </resources>
