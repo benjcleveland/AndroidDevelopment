@@ -16,6 +16,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.BaseColumns;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
@@ -31,6 +32,7 @@ public class BoatListActivity extends ListActivity {
 	private Dialog mSplashScreen;
 	
 	private static final String fields[] = { "title", "price", "description",  "preview", BaseColumns._ID };
+	private static final String TAG = "BoatListActivity";
 	
 	/** Called when the activity is first created. */
     @Override
@@ -65,6 +67,10 @@ public class BoatListActivity extends ListActivity {
     	
     	// pass the information to the other activity
     	intent.putExtra("desc", c.getString(c.getColumnIndex("description")));
+    	intent.putExtra("picture", c.getString(c.getColumnIndex("preview")));
+    	
+    	int price = c.getInt(c.getColumnIndex("price"));
+    	intent.putExtra("price", convertDollar( price ) );
     	
     	// start the other activity
     	startActivity(intent);
@@ -83,6 +89,7 @@ public class BoatListActivity extends ListActivity {
     	mSplashScreen = new Dialog( this, R.style.splashscreen );
     	
     	mSplashScreen.setContentView(R.layout.splashscreen);
+    	mSplashScreen.setCancelable(false);
     	mSplashScreen.show();
     	
     	// make the splash screen go away after a set amount of time
@@ -98,19 +105,31 @@ public class BoatListActivity extends ListActivity {
     	}, 3000);
     }
     
+    
+    // make sure we clean everything up correctly
     @Override
-    protected void onPause()
+    protected void onDestroy()
     {
-    	super.onPause();
+    	super.onDestroy();
     	
-    	// TODO - deal with the exceptions that are getting thrown when the phone is rotated.
-    	// close the data base
-    	//database.close();
-    	// close the cursor
-    	//dataSource.getCursor().close();
+    	if( database != null)
+    	{
+    		database.close();
+    	}
+    	
+    	Cursor c = dataSource.getCursor();
+    	if( c != null)
+    	{
+    		c.close();
+    	}
     }
-    
-    
+	
+    // convert a dollar number to a string
+	private String convertDollar( int number )
+	{
+		return "$" + NumberFormat.getInstance().format(number);
+	}
+	
     // extended the simple cursor adapter so we can add the image to the listview
     private class PictureAdapter extends SimpleCursorAdapter 
     {
@@ -130,7 +149,7 @@ public class BoatListActivity extends ListActivity {
 			TextView price = (TextView) row.findViewById(R.id.cost);
 			
 			int prices = mCursor.getInt(mCursor.getColumnIndex("price"));
-			price.setText("$" + NumberFormat.getInstance().format(prices));
+			price.setText( convertDollar( prices ));
 			
 			// get the name of the image
 			String filename = mCursor.getString(mCursor.getColumnIndex("preview"));
@@ -144,7 +163,7 @@ public class BoatListActivity extends ListActivity {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					// don't do anything for now - the default item will be displayed
-					// e.printStackTrace();
+					Log.e(TAG, "Received an exception setting bitmap", e);
 				}
 			}
 			

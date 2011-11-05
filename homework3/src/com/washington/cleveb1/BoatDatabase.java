@@ -18,7 +18,6 @@ public class BoatDatabase extends SQLiteOpenHelper  {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO Auto-generated method stub
 		
 		//"IF NOT EXISTS"
 		db.execSQL("CREATE TABLE boats (" 

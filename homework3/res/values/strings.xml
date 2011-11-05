@@ -6,18 +6,40 @@
     <string-array name="boat_titles">
         <item >Duckworth Pacific Navigator 255</item>
         <item >Wellcraft 232 Coastal</item>
+        <item>Amazing Luxury</item>
+        <item>Luxury Liner</item>
+        <item>Nordlund</item>
+        <item>Avalon Funship</item>
+        <item>LeClerq Custom</item>
     </string-array>
     <integer-array name="boat_prices">
         <item >125000</item>
         <item >50000</item>
+        <item>2200000</item>
+        <item>499900</item>
+        <item>999000</item>
+        <item>1750000</item>
+        <item>3995000</item>
     </integer-array>
     <string-array name="boat_pictures">
         <item >powerboat.png</item>
         <item >sailboat.png</item>
+        <item>luxury1.png</item>
+        <item>luxury2.png</item>
+        <item>luxury3.png</item>
+        <item>yacht1.png</item>
+        <item>fearless.png</item>
     </string-array>
     <string-array name="boat_description">
         <item >2011 Avalon AMBASSADOR 2011 AVALON Ambassador , This is priced with a 150HP Honda and a black powder coated tandem EZ loader trailer with disk brakes.</item>
         <item >2011 Avalon Eagle Family 2011 AVALON Eagle Family, Priced with a 15HP honda engine and an ez loader trailer</item>
+        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>
+        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>
+        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>
+        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>
+        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>   
     </string-array>
+        <string name="details">Details: </string>
+        <string name="price">Price:</string>
 
 </resources>
