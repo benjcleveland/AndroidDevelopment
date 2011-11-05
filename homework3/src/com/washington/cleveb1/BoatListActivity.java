@@ -3,8 +3,10 @@ package com.washington.cleveb1;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.NumberFormat;
+import java.text.ParseException;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -31,11 +33,15 @@ import android.widget.Toast;
 
 public class BoatListActivity extends ActionBarActivity {
     
+	private static final int BOAT_SEARCH = 0;
 	// constants
 	private static final String PREVIEW = "preview";
 	private static final String DESCRIPTION = "description";
 	private static final String PRICE = "price";
 	private static final String TITLE = "title";
+	private static final String MAXIMUM = "maximum";
+	private static final String MINIMUM = "minimum";
+	
 	
 	private SQLiteDatabase database;
 	private CursorAdapter dataSource;
@@ -116,11 +122,49 @@ public class BoatListActivity extends ActionBarActivity {
                 Toast.makeText(this, "Tapped search", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent( getBaseContext(), BoatSearchActivity.class);
                 
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, BOAT_SEARCH);
                 
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    // handle the results from activities
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+    	if( resultCode == Activity.RESULT_OK)
+    	{
+    		if( requestCode == BOAT_SEARCH)
+    		{
+    			String min = data.getStringExtra(MINIMUM);
+    			String max = data.getStringExtra(MAXIMUM);
+    			
+    			Log.v(TAG, "min = " + min +max);
+    			
+    			// convert to an integer
+    			String minimum = dollarConvert( min);
+    			String maximum = dollarConvert( max );
+    			String search = null;
+    			
+    			// build the search query
+    			if( minimum != null )
+    			{
+    				search = "price > " + minimum;
+    			}
+    			if( maximum != null)
+    			{
+    				if( search != null)
+    					search = search + " and price < " +maximum;
+    				else
+    					search = "price < " + maximum;
+    			}
+    			
+    			Cursor new_cursor = database.query("boats", null, search, null, null, null, null);
+    			
+    			dataSource.changeCursor( new_cursor );
+    			dataSource.notifyDataSetChanged();
+    		}
+    	}
     }
 
     // display the splash screen
@@ -167,25 +211,36 @@ public class BoatListActivity extends ActionBarActivity {
     // convert a dollar number to a string
 	private String convertDollar( int number )
 	{
-		return "$" + NumberFormat.getInstance().format(number);
+		return NumberFormat.getCurrencyInstance().format(number);
+	}
+	
+	// convert a dollar string to int
+	private String dollarConvert( String dollar )
+	{
+		String ret = null;
+		try {
+			 ret = NumberFormat.getCurrencyInstance().parse(dollar).toString();
+		} catch (ParseException e) {
+			Log.v(TAG, "Error trying to convert dollar to an int");
+		}
+		return ret;
 	}
 	
     // extended the simple cursor adapter so we can add the image to the listview
     private class PictureAdapter extends SimpleCursorAdapter 
     {
-    	private Cursor mCursor;
 		public PictureAdapter(Context context, int layout, Cursor c,
 				String[] from, int[] to) {
 			super(context, layout, c, from, to);
-			mCursor = c;
 		}
     	
 		public View getView( int position, View convertView, ViewGroup parent )
 		{
 			View row = super.getView(position, convertView, parent);
 			ImageView icon = (ImageView) row.findViewById(R.id.preview);
-
+			
 			TextView price = (TextView) row.findViewById(R.id.cost);
+			Cursor mCursor = getCursor();
 			
 			int prices = mCursor.getInt(mCursor.getColumnIndex(PRICE));
 			// this will put a $ in front of the price text

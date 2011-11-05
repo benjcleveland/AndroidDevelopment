@@ -10,11 +10,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 // search activity
 public class BoatSearchActivity extends Activity {
 
+	private static final String MAXIMUM = "maximum";
+	private static final String MINIMUM = "minimum";
+	
 	private ArrayList<String> min_list = new ArrayList<String>();
 	private ArrayList<String> max_list = new ArrayList<String>();
 	
@@ -58,19 +60,19 @@ public class BoatSearchActivity extends Activity {
 		search_button.setOnClickListener( searchListener );
 	}
 
+	// handle the search button clicks
 	private View.OnClickListener searchListener = new View.OnClickListener() {
 		
 		public void onClick(View v) {
 			
 			// get the data from the spinners and pass it back to the calling activity
-			
 			Log.v("activity","seleced = " + min_spinner.getSelectedItem());
 			
 			Intent resultIntent = new Intent();
 			
 			// add data to the result intent
-			resultIntent.putExtra("minimum", (String) min_spinner.getSelectedItem());
-			resultIntent.putExtra("maximum", (String) max_spinner.getSelectedItem());
+			resultIntent.putExtra(MINIMUM, (String) min_spinner.getSelectedItem());
+			resultIntent.putExtra(MAXIMUM, (String) max_spinner.getSelectedItem());
 			
 			setResult(Activity.RESULT_OK, resultIntent);
 			
