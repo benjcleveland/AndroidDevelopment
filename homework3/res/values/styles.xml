@@ -6,13 +6,17 @@
     </style>
 
     
-    <style name="listFont" parent="android:Widget.TextView">
+    <style name="displayFont" parent="android:Widget.TextView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:typeface">sans</item>
+    </style>
+    <style name="listFont" parent="displayFont">
         <item name="android:singleLine">true</item>
-        <item name="android:textSize">12sp</item>
     </style>
     <style name="title" parent="@style/listFont">
         <item name="android:background">#66000000</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="tableStyle">

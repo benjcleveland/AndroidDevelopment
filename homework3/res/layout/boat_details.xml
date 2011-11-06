@@ -1,85 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/FrameLayout1"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView1"
     style="@style/page_background"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <ImageView
-        android:id="@+id/boat_picture"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:scaleType="fitXY"
-        android:src="@android:drawable/alert_dark_frame" />
-
-    <TextView
-        android:id="@+id/details_title"
-        style="@style/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name" />
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
 
-    <TableLayout
-        android:id="@+id/tableLayout1"
-        style="@style/tableStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" >
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/FrameLayout1"
+            style="@style/page_background"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent" >
 
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <TextView
-                android:id="@+id/textView1"
-                style="@style/listFont"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/details" />
-
-            <TextView
-                android:id="@+id/description"
-                style="@style/listFont"
+            <ImageView
+                android:id="@+id/boat_picture"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.19"
-                android:text="Medium Text" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/tableRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+                android:layout_height="308dp"
+                android:scaleType="fitXY"
+                android:src="@android:drawable/alert_dark_frame" />
 
             <TextView
-                android:id="@+id/textView3"
-                style="@style/listFont"
+                android:id="@+id/details_title"
+                style="@style/title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name" />
+        </FrameLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayout1"
+            style="@style/tableStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TableRow
+                android:id="@+id/tableRow2"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/price" />
+                android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/price"
-                style="@style/listFont"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".19"
-                android:text="Medium Text" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/textView3"
+                    style="@style/listFont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price" />
 
-        <TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </TableRow>
+                <TextView
+                    android:id="@+id/price"
+                    style="@style/listFont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".19"
+                    android:text="Medium Text" />
+            </TableRow>
 
-        <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </TableRow>
-    </TableLayout>
+            <TableRow
+                android:id="@+id/tableRow1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
-</FrameLayout>
+                <TextView
+                    android:id="@+id/textView1"
+                    style="@style/listFont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details" />
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/displayFont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.19"
+                    android:text="Medium Text" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+        
+</ScrollView>

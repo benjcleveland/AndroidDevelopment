@@ -29,7 +29,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class BoatListActivity extends ActionBarActivity {
     
@@ -119,7 +118,8 @@ public class BoatListActivity extends ActionBarActivity {
         switch (item.getItemId()) {
 
             case R.id.menu_search:
-                Toast.makeText(this, "Tapped search", Toast.LENGTH_SHORT).show();
+                
+            	// start the search activity
                 Intent intent = new Intent( getBaseContext(), BoatSearchActivity.class);
                 
                 startActivityForResult(intent, BOAT_SEARCH);
@@ -161,7 +161,10 @@ public class BoatListActivity extends ActionBarActivity {
     			
     			Cursor new_cursor = database.query("boats", null, search, null, null, null, null);
     			
+    			// change the cursor
     			dataSource.changeCursor( new_cursor );
+    			
+    			// notify the data set changed
     			dataSource.notifyDataSetChanged();
     		}
     	}

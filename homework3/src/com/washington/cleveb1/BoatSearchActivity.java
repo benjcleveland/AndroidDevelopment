@@ -31,12 +31,12 @@ public class BoatSearchActivity extends Activity {
 		// set the content view
 		setContentView( R.layout.search_layout );
 	
-		int base = 5000;
-		int incr = 5000;
+		int base = 25000;
+		int incr = 25000;
 		min_list.add("No min");
 		max_list.add("No max");
 		// this could be done in the strings.xml with an array but I am lazy... (don't want to enter all the numbers)
-		for( int i = 0; i < 20; ++i)
+		for( int i = 0; i < 60; ++i)
 		{
 			String number = "$" + NumberFormat.getInstance().format(base + incr*i);
 			min_list.add( number );
