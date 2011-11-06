@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class BoatListActivity extends ActionBarActivity {
     
@@ -161,11 +162,24 @@ public class BoatListActivity extends ActionBarActivity {
     			
     			Cursor new_cursor = database.query("boats", null, search, null, null, null, null);
     			
-    			// change the cursor
-    			dataSource.changeCursor( new_cursor );
-    			
-    			// notify the data set changed
-    			dataSource.notifyDataSetChanged();
+    			// deal with the case the search returned nothing
+    			if( new_cursor.getCount() == 0 )
+    			{
+    				// notify the user the search did not return any results
+    				// TODO - this does not work for some reason
+    				Toast.makeText(getApplicationContext(), "Search did not return any results, displaying last search results", Toast.LENGTH_LONG);
+    				
+    				// close this cursor
+    				new_cursor.close();
+    			}
+    			else
+    			{
+					// change the cursor
+					dataSource.changeCursor(new_cursor);
+
+					// notify the data set changed
+					dataSource.notifyDataSetChanged();
+    			}
     		}
     	}
     }
