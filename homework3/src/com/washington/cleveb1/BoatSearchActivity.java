@@ -36,7 +36,7 @@ public class BoatSearchActivity extends Activity {
 		min_list.add("No min");
 		max_list.add("No max");
 		// this could be done in the strings.xml with an array but I am lazy... (don't want to enter all the numbers)
-		for( int i = 0; i < 120; ++i)
+		for( int i = 0; i < 150; ++i)
 		{
 			String number = "$" + NumberFormat.getInstance().format(base + incr*i);
 			min_list.add( number );

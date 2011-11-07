@@ -65,7 +65,7 @@ public class BoatListActivity extends ActionBarActivity {
         BoatDatabase boatdb = new BoatDatabase( this );
         database = boatdb.getWritableDatabase();
         
-        Cursor data = database.query("boats", fields, null, null, null, null, null);
+        Cursor data = database.query("boats", fields, null, null, null, null, "price");
     
         // create a simple cursor adapter
         dataSource = new PictureAdapter( this, R.layout.list_row, data, fields, new int[] { R.id.title, R.id.cost, R.id.description} );
@@ -160,7 +160,7 @@ public class BoatListActivity extends ActionBarActivity {
     					search = "price < " + maximum;
     			}
     			
-    			Cursor new_cursor = database.query("boats", null, search, null, null, null, null);
+    			Cursor new_cursor = database.query("boats", null, search, null, null, null, "price");
     			
     			// deal with the case the search returned nothing
     			if( new_cursor.getCount() == 0 )

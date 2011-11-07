@@ -46,7 +46,7 @@ import java.util.Set;
 public class ActionBarHelperBase extends ActionBarHelper {
     private static final String MENU_RES_NAMESPACE = "http://schemas.android.com/apk/res/android";
     private static final String MENU_ATTR_ID = "id";
-    private static final String MENU_ATTR_SHOW_AS_ACTION = "showAsAction";
+  //  private static final String MENU_ATTR_SHOW_AS_ACTION = "showAsAction";
 
     protected Set<Integer> mActionItemIds = new HashSet<Integer>();
 
@@ -249,7 +249,7 @@ public class ActionBarHelperBase extends ActionBarHelper {
 
                 int eventType = parser.getEventType();
                 int itemId;
-                int showAsAction;
+               // int showAsAction;
 
                 boolean eof = false;
                 while (!eof) {
@@ -265,8 +265,8 @@ public class ActionBarHelperBase extends ActionBarHelper {
                                 break;
                             }
 
-                            showAsAction = parser.getAttributeIntValue(MENU_RES_NAMESPACE,
-                                    MENU_ATTR_SHOW_AS_ACTION, -1);
+                           // showAsAction = parser.getAttributeIntValue(MENU_RES_NAMESPACE,
+                          //          MENU_ATTR_SHOW_AS_ACTION, -1);
                             
                             /*if (showAsAction == MenuItem.SHOW_AS_ACTION_ALWAYS ||
                                     showAsAction == MenuItem.SHOW_AS_ACTION_IF_ROOM) 

@@ -11,6 +11,9 @@
         <item>Nordlund</item>
         <item>Avalon Funship</item>
         <item>LeClerq Custom</item>
+        <item>Riviera 5000</item>
+        <item>Formula 45</item>
+        <item>Formula 40PC Cruiser</item>
     </string-array>
     <integer-array name="boat_prices">
         <item >125000</item>
@@ -20,6 +23,9 @@
         <item>999000</item>
         <item>1750000</item>
         <item>3995000</item>
+        <item>75000</item>
+        <item>85000</item>
+        <item>95000</item>
     </integer-array>
     <string-array name="boat_pictures">
         <item >powerboat.png</item>
@@ -29,15 +35,21 @@
         <item>luxury3.png</item>
         <item>yacht1.png</item>
         <item>fearless.png</item>
+        <item>skiboat.png</item>
+        <item>woodboat.png</item>
+        <item>woodboat2.png</item>
     </string-array>
     <string-array name="boat_description">
         <item >2011 Avalon AMBASSADOR 2011 AVALON Ambassador , This is priced with a 150HP Honda and a black powder coated tandem EZ loader trailer with disk brakes.</item>
-        <item >2011 Avalon Eagle Family 2011 AVALON Eagle Family, Priced with a 15HP honda engine and an ez loader trailer</item>
-        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>
-        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>
-        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>
-        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>
-        <item>1989 CHEOY LEE Cockpit, This magnificent vessel has been impecably maintained. Fresh water kept on beautiful Lake Washington, she has been recently refitted and has new soft goods and furniture. Her wide body salon makes this feel like a 100 yacht. The entertainment system is a must see! For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell or email.</item>   
+        <item >2011 Avalon Eagle Family 2011 AVALON Eagle Family, Priced with a 15HP honda engine and an ez loader trailer.</item>
+        <item>Offshore 62\' semi-custom pilothouse motoryacht, designed and built for a knowledgeable owner.  Boat house kept and professionally maintained since new.  This vessel is one of a kind and is superb condition.  Repowered in 2007 with MAN 800hp Common Rail engines providing comfortable cruising a 16 knots with a max speed of 20 knots.  "Glory Jane" is one of the top quality Offshore Pilothouse\'s presently for sale.  Call today for details and viewing appointment.</item>
+        <item>Here is a better than new 62 Horizon with only 715 hours. This is the most popular 3-stateroom layout with an adult 3rd stateroom, not tiny bunk room. She was built for a discerning owner with every conceivable option like stabilizers, bow and stern thrusters, watermaker, hardtop, teak aft deck and dive platform, complete Nav package, 42" Plasma TV with custom stereo surround sound system, full size appliances and much, much more. There is a custom enclosure around the fully carpeted flying bridge with large BBQ and down draft vent fan. The Zodiac 380 inflatable tender with a Honda 40hp outboard is new in 2011 and has full weather covers. This boat has a replacement value of $2,100,000.</item>
+        <item>1989 ANGEL Pilothouse, The owners have spared no expense in the fitting and upgrading of this handsome 54 Angel, and have made her a long range cruising and fishing pilothouse motor yacht. For more information please contact Dan Wood at 206.625.1580, office or 206.719.1800, cell.</item>
+        <item>Three staterooms and many custom extras make this vessel a comfortable cruiser. She has full electronics, bow and stern thruster, large, well-appointed galley and Cherry wood interior. Fore more information please contact Dale Partna at 206.625.1580, office or 206.229.3134, cell.</item>
+        <item>Heavily built Grenfell Motoryacht built at Osborne Shipyard, Vancouver, B.C. Canada. Meticulously maintained and boathouse kept. Cruises at 9 knots using 6 gallons per hour. Well over $40,000 in upgrades since 2006. Features Wesmar bow-thruster and new 5-zone Webasto diesel heat. Entire vessel professionally rewired in 2007.</item>
+        <item>This extraordinary Sport Yacht has all of the highlights: Revolutionary Zeus drive system, spacious (3) stateroom layout, sunroof, tender garage, and the best "open" main deck arrangement in the industry - - just to name a few.</item>
+        <item>2012 FORMULA 45 Yacht, Custom Order your 2011 Formula 45 Yacht with exactly everything you want. You will not find better pricing on Formula Boats anywhere else.. Before you purchase a boat be sure to contact us.</item>
+        <item>2012 FORMULA 40PC Performance Cruiser, The largest cruiser that Formula offers provide\'s 2 private staterooms in the cabin as well as a large cockpit for relaxing in the sun. Powered with Volvo Diesels and IPS drives this boat has an amazing cruise speed of 29mph and tops out just over 40mph. If you looking for a large cruiser be sure to look at Formula\'s 40PC. Call us today for special Formula prices.</item>   
     </string-array>
         <string name="details">Details:  </string>
         <string name="price">Price:</string>

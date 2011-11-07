@@ -2,12 +2,12 @@
 <resources>
     <style name="page_background">
         <item name="android:padding">0dp</item>
-        <item name="android:background">#AA000080</item>
+        <item name="android:background">#AA000040</item>
     </style>
 
     
     <style name="displayFont" parent="android:Widget.TextView">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:typeface">sans</item>
     </style>
     <style name="listFont" parent="displayFont">
@@ -20,6 +20,12 @@
     </style>
 
     <style name="tableStyle">
-        <item name="android:background">#66000000</item>
+        <item name="android:background">#00000000</item>
+    </style>
+    <style name="previewText" parent="displayFont">
+        <item name="android:ellipsize">end</item>
+        <item name="android:focusable">false</item>
+        <item name="android:maxLines">6</item>
+        <item name="android:textSize">10sp</item>
     </style>
 </resources>
