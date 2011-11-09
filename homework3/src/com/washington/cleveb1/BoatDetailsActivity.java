@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +25,12 @@ public class BoatDetailsActivity extends Activity {
 	{
 		super.onCreate(savedInstanceState);
 		
+		// change the font and color of the title text
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		// set the content view to the boat details
 		setContentView(R.layout.boat_details);
+		// change the title text
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_text);
 		
 		// get the info from the intent
 		Bundle extras = getIntent().getExtras();

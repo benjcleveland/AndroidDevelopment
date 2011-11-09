@@ -41,8 +41,7 @@ public class BoatListActivity extends ActionBarActivity {
 	private static final String TITLE = "title";
 	private static final String MAXIMUM = "maximum";
 	private static final String MINIMUM = "minimum";
-	
-	
+		
 	private SQLiteDatabase database;
 	private CursorAdapter dataSource;
 	
@@ -55,11 +54,12 @@ public class BoatListActivity extends ActionBarActivity {
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    	showSplashScreen();
+    	super.onCreate(savedInstanceState);
         
         // show the splash screen
-        showSplashScreen();
-
+        //showSplashScreen();
+        
         setContentView(R.layout.main);
         
         BoatDatabase boatdb = new BoatDatabase( this );

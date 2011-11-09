@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -28,9 +29,14 @@ public class BoatSearchActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		
 		// set the content view
 		setContentView( R.layout.search_layout );
-	
+		
+		// change the title text with our format
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_text);
+		
 		int base = 25000;
 		int incr = 25000;
 		min_list.add("No min");

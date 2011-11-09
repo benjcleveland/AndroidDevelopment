@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="customLightTheme" parent="android:Theme.Light">
+        <item name="android:windowTitleBackgroundStyle">@style/windowTitleStyle</item>
+    </style>
+
+    
+</resources>
