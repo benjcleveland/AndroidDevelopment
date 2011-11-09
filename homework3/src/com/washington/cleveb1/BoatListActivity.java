@@ -54,11 +54,11 @@ public class BoatListActivity extends ActionBarActivity {
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	showSplashScreen();
+        
     	super.onCreate(savedInstanceState);
         
         // show the splash screen
-        //showSplashScreen();
+        showSplashScreen();
         
         setContentView(R.layout.main);
         
