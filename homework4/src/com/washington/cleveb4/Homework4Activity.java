@@ -17,9 +17,9 @@ public class Homework4Activity extends ListActivity {
 	private static final String PHRASE_TABLE = "phrase";
 	private static final String CATEGORY = "category";
 	private SQLiteDatabase langdb;
-	private CursorAdapter dataSource;
-	private CursorAdapter categorySource;
-	private CursorAdapter languageSource;
+	private CursorAdapter dataSource = null;
+	private CursorAdapter categorySource = null;
+	private CursorAdapter languageSource = null;
 	
 	private Spinner categorySpinner;
 	private Spinner languageSpinner;
@@ -86,13 +86,14 @@ public class Homework4Activity extends ListActivity {
 			order = new int[] { android.R.id.text2, android.R.id.text1 };
 		}
 		
-		// update the category cursor
-		Cursor categoryCursor = langdb.query("category", new String[] {"_ID", "name", "number" },	"language = '" + lang +"'", null, null, null, null);
-		categorySource.changeCursor(categoryCursor);
-		
 		// change the order of the languages
 		dataSource = new SimpleCursorAdapter( getBaseContext(), android.R.layout.simple_list_item_2, dataSource.getCursor(), new String[] {"english", "spanish" }, order );
 		setListAdapter(dataSource);
+		
+		// update the category cursor
+		Cursor categoryCursor = langdb.query("category", new String[] {"_ID", "name", "number" },	"language = '" + lang +"'", null, null, null, null);
+		categorySource.changeCursor(categoryCursor);
+		categorySource.notifyDataSetChanged();
 	}
 	
 	
@@ -110,7 +111,7 @@ public class Homework4Activity extends ListActivity {
         categorySpinner = (Spinner) findViewById( R.id.category_spinner );
         
         // get the cursor for the category spinner
-        Cursor category_data = langdb.query("category", new String[]{"_ID", "name"}, "language = 'English'", null, null, null, null);
+        Cursor category_data = langdb.query("category", new String[]{"_ID", "name", "number"}, "language = 'English'", null, null, null, null);
         
         categorySource = new SimpleCursorAdapter( this, android.R.layout.simple_spinner_item, category_data, new String[] {"name"}, new int[]{android.R.id.text1});
         
@@ -130,7 +131,6 @@ public class Homework4Activity extends ListActivity {
         
         languageSpinner.setOnItemSelectedListener( language_listener );
         
-        
         // get the cursor for the list view
         Cursor data = langdb.query(PHRASE_TABLE, new String[] {"english", "spanish", "_ID"}, "category_number = 1", null, null, null, null);
     
@@ -138,5 +138,35 @@ public class Homework4Activity extends ListActivity {
         
         // connect the database to the list
         setListAdapter(dataSource);
+    }
+    
+    // make sure we clean up everything correctly
+    @Override
+    protected void onDestroy()
+    {
+    	super.onDestroy();
+    	
+    	if( langdb != null)
+    	{
+    		langdb.close();
+    	}
+    	
+    	Cursor c = dataSource.getCursor();
+    	if( c != null)
+    	{
+    		c.close();
+    	}
+    	
+    	c = categorySource.getCursor();
+    	if( c != null )
+    	{
+    		c.close();
+    	}
+    	
+    	c = languageSource.getCursor();
+    	if( c != null )
+    	{
+    		c.close();
+    	}
     }
 }
