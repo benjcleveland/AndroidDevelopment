@@ -14,8 +14,8 @@ import android.widget.Spinner;
 
 public class Homework4Activity extends ListActivity {
 	
+	private static final String CATEGORY_TABLE = "category";
 	private static final String PHRASE_TABLE = "phrase";
-	private static final String CATEGORY = "category";
 	private SQLiteDatabase langdb;
 	private CursorAdapter dataSource = null;
 	private CursorAdapter categorySource = null;
@@ -91,7 +91,7 @@ public class Homework4Activity extends ListActivity {
 		setListAdapter(dataSource);
 		
 		// update the category cursor
-		Cursor categoryCursor = langdb.query("category", new String[] {"_ID", "name", "number" },	"language = '" + lang +"'", null, null, null, null);
+		Cursor categoryCursor = langdb.query(CATEGORY_TABLE, new String[] {"_ID", "name", "number" },	"language = '" + lang +"'", null, null, null, null);
 		categorySource.changeCursor(categoryCursor);
 		categorySource.notifyDataSetChanged();
 	}
@@ -111,7 +111,7 @@ public class Homework4Activity extends ListActivity {
         categorySpinner = (Spinner) findViewById( R.id.category_spinner );
         
         // get the cursor for the category spinner
-        Cursor category_data = langdb.query("category", new String[]{"_ID", "name", "number"}, "language = 'English'", null, null, null, null);
+        Cursor category_data = langdb.query(CATEGORY_TABLE, new String[]{"_ID", "name", "number"}, "language = 'English'", null, null, null, null);
         
         categorySource = new SimpleCursorAdapter( this, android.R.layout.simple_spinner_item, category_data, new String[] {"name"}, new int[]{android.R.id.text1});
         
