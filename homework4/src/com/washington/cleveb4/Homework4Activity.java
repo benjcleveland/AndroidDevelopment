@@ -34,7 +34,7 @@ public class Homework4Activity extends ListActivity {
 			
 			Log.v("hw4", "cursor value" + c.getString(c.getColumnIndex("name")) );
 			
-			String selection = "category = '" + c.getString(c.getColumnIndex("name")) +"'";
+			String selection = "category_number = " + c.getString(c.getColumnIndex("number")) +"";
 			
 			// we need to update the listview selection
 			Cursor new_cursor = langdb.query(PHRASE_TABLE, new String[] {"english", "spanish", "_ID"}, selection, null, null, null, null);
@@ -87,7 +87,7 @@ public class Homework4Activity extends ListActivity {
 		}
 		
 		// update the category cursor
-		Cursor categoryCursor = langdb.query("category", new String[] {"_ID", "name" },	"language = '" + lang +"'", null, null, null, null);
+		Cursor categoryCursor = langdb.query("category", new String[] {"_ID", "name", "number" },	"language = '" + lang +"'", null, null, null, null);
 		categorySource.changeCursor(categoryCursor);
 		
 		// change the order of the languages
@@ -132,7 +132,7 @@ public class Homework4Activity extends ListActivity {
         
         
         // get the cursor for the list view
-        Cursor data = langdb.query(PHRASE_TABLE, new String[] {"english", "spanish", "_ID"}, "category = 'medical questions'", null, null, null, null);
+        Cursor data = langdb.query(PHRASE_TABLE, new String[] {"english", "spanish", "_ID"}, "category_number = 1", null, null, null, null);
     
         dataSource = new SimpleCursorAdapter( this, android.R.layout.simple_list_item_2, data, new String[] {"english", "spanish" }, new int[]{android.R.id.text1, android.R.id.text2 } );
         
