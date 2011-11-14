@@ -2,7 +2,6 @@ package com.washington.cleveb4;
 
 import android.app.ListActivity;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +12,6 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
 public class Homework4Activity extends ListActivity {
-	
-	private static final String CATEGORY_TABLE = "category";
-	private static final String PHRASE_TABLE = "phrase";
 	
 	private LanguageDatabase langhelper;
 	
