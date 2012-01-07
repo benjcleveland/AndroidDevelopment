@@ -1,14 +1,25 @@
 package edu.uw.cleveb.hw7;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class Homework007Activity extends Activity {
 	
-	static WebView webview;
+	private static WebView webview;
+	private static Button goButton;
+	private static EditText url;
 	
     /** Called when the activity is first created. */
     @Override
@@ -16,8 +27,10 @@ public class Homework007Activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        // get the web view
+        // get all the necessary views
         webview = (WebView) findViewById(R.id.webview);
+        goButton = (Button) findViewById(R.id.go_button);
+        url = (EditText) findViewById(R.id.url_text);
         
         // enable javascript
         webview.getSettings().setJavaScriptEnabled(true);
@@ -27,6 +40,39 @@ public class Homework007Activity extends Activity {
         
         // use our webview client
         webview.setWebViewClient(new myWebViewClient());
+        
+        // change the go button on click handler
+        goButton.setOnClickListener(new OnClickListener()
+        {
+        	// load the url when clicked
+        	public void onClick( View view )
+        	{
+        		openUrl();
+        	}
+        });
+        
+        // this will allow the user to hit enter while in the edit text and not have to hit the go button
+        url.setOnKeyListener(new OnKeyListener()
+        {
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if( keyCode == KeyEvent.KEYCODE_ENTER)
+				{
+					openUrl();
+				}
+				return false;
+			}
+        });
+    }
+    
+    // open the url that has been entered in the url edit text
+    private void openUrl()
+    {
+    	// don't worry if the user has not entered anything into the url edit text 
+    	webview.loadUrl(url.getText().toString());
+
+		// hide the onscreen keyboard
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(url.getWindowToken(), 0);
     }
     
     // override the back button so we can navigate back
@@ -40,6 +86,16 @@ public class Homework007Activity extends Activity {
     	}
     	return super.onKeyDown(keyCode, event);
     }
+    
+    // create/inflate the options menu
+    @Override
+    public boolean onCreateOptionsMenu( Menu menu)
+    {
+    	MenuInflater inflater = getMenuInflater();
+    	inflater.inflate(R.menu.menu, menu);
+    	return true;
+    }
+    
     // override the webview client so we can click on links and not open the default browser
     private class myWebViewClient extends WebViewClient
     {
