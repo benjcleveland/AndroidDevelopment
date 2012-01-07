@@ -1,21 +1,8 @@
 package edu.uw.cleveb.hw7;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -29,15 +16,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 public class Homework007Activity extends Activity {
 	
+	private static final String URL = "url";
 	private static WebView webview;
 	private static Button goButton;
 	private static EditText url;
-	
-	private static TextView source;
 	
     /** Called when the activity is first created. */
     @Override
@@ -49,7 +34,6 @@ public class Homework007Activity extends Activity {
         webview = (WebView) findViewById(R.id.webview);
         goButton = (Button) findViewById(R.id.go_button);
         url = (EditText) findViewById(R.id.url_text);
-        source = (TextView) findViewById(R.id.sourceview);
         
         // enable javascript
         webview.getSettings().setJavaScriptEnabled(true);
@@ -122,42 +106,14 @@ public class Homework007Activity extends Activity {
 		// handle the item selection
 		switch (item.getItemId()) {
 		case R.id.source:
-			// get and display the source to the user
-			webview.setVisibility(WebView.GONE);
-			source.setVisibility(TextView.VISIBLE);
+			// create an intent to start the view source activity
+			Intent intent = new Intent(getBaseContext(), ViewSourceActivity.class);
 			
-			String source_text = "Here is the source!";
-			try
-			{
-				HttpClient client = new DefaultHttpClient();
-				HttpGet request = new HttpGet();
-				request.setURI(new URI(webview.getUrl()));
-				HttpResponse response= client.execute(request);
-				
-				HttpEntity entity = response.getEntity();
-				if( entity != null)
-				{
-					InputStream instream = entity.getContent();
-					BufferedReader br = new BufferedReader( new InputStreamReader(instream));
-					StringBuilder sb = new StringBuilder();
-					String line = "";
-					while((line = br.readLine()) != null)
-					{
-						sb.append(line + "\n");
-					}
-					instream.close();
-					source_text = sb.toString();
-				}
-			}
-			catch( IOException e )
-			{
-				e.printStackTrace();
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			}
+			// pass the current url to the page source activity
+			intent.putExtra( URL, webview.getUrl());
 			
-			source.setText(source_text);
-			
+			// start the activty
+			startActivity( intent );
 			return true;
 
 		default:
