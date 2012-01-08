@@ -15,10 +15,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.webkit.CookieManager;
 import android.widget.TextView;
 
 public class ViewSourceActivity extends Activity {
 	private static final String URL = "url";
+	private static final String TYPE = "type";
+	
 	private static TextView source;
 	
 	@Override
@@ -34,7 +37,17 @@ public class ViewSourceActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		if( extras != null )
 		{
-			source.setText(getPageSource(extras.getString(URL)));
+			switch( extras.getInt(TYPE))
+			{
+			case R.id.source:
+				// display the page source
+				source.setText(getPageSource(extras.getString(URL)));
+			break;
+			case R.id.cookies:
+				// display the cookie for this url
+				source.setText(CookieManager.getInstance().getCookie(extras.getString(URL)));
+			break;
+			}
 		}
 	}
 	
