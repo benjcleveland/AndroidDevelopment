@@ -32,12 +32,12 @@ public class Homework007Activity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-			
+
 		final Activity activity = this;
-		
+
 		// for kicks let display the progress
 		getWindow().requestFeature(Window.FEATURE_PROGRESS);
-		
+
 		setContentView(R.layout.main);
 
 		// get all the necessary views
@@ -47,20 +47,18 @@ public class Homework007Activity extends Activity {
 
 		// enable javascript
 		webview.getSettings().setJavaScriptEnabled(true);
-		
+
 		// enable multi touch
 		webview.getSettings().setBuiltInZoomControls(true);
-		
+
 		// enable the ability to update the progress bar
-		webview.setWebChromeClient(new WebChromeClient()
-		{
-			public void onProgressChanged( WebView view, int progress)
-			{
+		webview.setWebChromeClient(new WebChromeClient() {
+			public void onProgressChanged(WebView view, int progress) {
 				// update the progress bar
 				activity.setProgress(progress * 100);
 			}
 		});
-	
+
 		// load the default url
 		webview.loadUrl("http://www.google.com");
 
@@ -74,7 +72,7 @@ public class Homework007Activity extends Activity {
 				openUrl();
 			}
 		});
-		
+
 		// this will allow the user to hit enter while in the edit text and not
 		// have to hit the go button
 		url.setOnKeyListener(new OnKeyListener() {
