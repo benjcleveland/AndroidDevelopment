@@ -3,5 +3,8 @@
 
     <string name="hello">Hello World, Homework008Activity!</string>
     <string name="app_name">Homework 008</string>
+    <string name="zip_code">Enter Zip Code:  </string>
+    <string name="high">"High: "</string>
+    <string name="low">"Low: "</string>
 
 </resources>
