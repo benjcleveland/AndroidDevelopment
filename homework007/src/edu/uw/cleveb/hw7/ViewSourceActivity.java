@@ -21,64 +21,58 @@ import android.widget.TextView;
 public class ViewSourceActivity extends Activity {
 	private static final String URL = "url";
 	private static final String TYPE = "type";
-	
+
 	private static TextView source;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.viewsource_layout);
-		
+
 		// get the neccessary views
-		source = (TextView) findViewById( R.id.sourceview);
-		
+		source = (TextView) findViewById(R.id.sourceview);
+
 		// get the url from the intent
 		Bundle extras = getIntent().getExtras();
-		if( extras != null )
-		{
-			switch( extras.getInt(TYPE))
-			{
+		if (extras != null) {
+			switch (extras.getInt(TYPE)) {
 			case R.id.source:
 				// display the page source
 				source.setText(getPageSource(extras.getString(URL)));
-			break;
+				break;
 			case R.id.cookies:
 				// display the cookie for this url
-				source.setText(CookieManager.getInstance().getCookie(extras.getString(URL)));
-			break;
+				source.setText(CookieManager.getInstance().getCookie(
+						extras.getString(URL)));
+				break;
 			}
 		}
 	}
-	
+
 	// get the source for the given url
-	private String getPageSource( String url )
-	{
+	private String getPageSource(String url) {
 		String page_source = "";
-		try
-		{
+		try {
 			HttpClient client = new DefaultHttpClient();
 			HttpGet request = new HttpGet();
 			request.setURI(new URI(url));
-			HttpResponse response= client.execute(request);
-			
+			HttpResponse response = client.execute(request);
+
 			HttpEntity entity = response.getEntity();
-			if( entity != null)
-			{
+			if (entity != null) {
 				InputStream instream = entity.getContent();
-				BufferedReader br = new BufferedReader( new InputStreamReader(instream));
+				BufferedReader br = new BufferedReader(new InputStreamReader(
+						instream));
 				StringBuilder sb = new StringBuilder();
 				String line = "";
-				while((line = br.readLine()) != null)
-				{
+				while ((line = br.readLine()) != null) {
 					sb.append(line + "\n");
 				}
 				instream.close();
 				page_source = sb.toString();
 			}
-		}
-		catch( IOException e )
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
