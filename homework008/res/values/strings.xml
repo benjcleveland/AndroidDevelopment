@@ -6,5 +6,9 @@
     <string name="zip_code">Enter Zip Code:  </string>
     <string name="high">"High: "</string>
     <string name="low">"Low: "</string>
+    <string name="spacer">" - "</string>
+    <string name="fahrenheit">F</string>
+    <string name="celcius">"C "</string>
+    <string name="forecast">Forecast:</string>
 
 </resources>

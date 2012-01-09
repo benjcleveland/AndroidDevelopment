@@ -34,7 +34,8 @@ public class Homework008Activity extends Activity {
 	
 	private static TextView current_condition;
 	private static TextView current_temp;
-	private static WebView forcast;
+	private static TextView current_temp_celcius;
+	private static WebView forecast;
 	private static EditText zipcode;
 	private static TextView title;
 	
@@ -46,7 +47,8 @@ public class Homework008Activity extends Activity {
         
         current_condition = (TextView)findViewById(R.id.current_condition);
         current_temp = (TextView)findViewById(R.id.current_temp);
-        forcast = (WebView) findViewById(R.id.webview);
+        current_temp_celcius = (TextView)findViewById(R.id.current_temp_celsius);
+        forecast = (WebView) findViewById(R.id.webview);
         zipcode = (EditText) findViewById(R.id.zip_code_text);
         title = (TextView) findViewById(R.id.title);
        
@@ -64,7 +66,7 @@ public class Homework008Activity extends Activity {
 			}
         });
         // fill in the weather for the default zip code
-        displayWeather("98057");
+        displayWeather("98105");
     }
     
     // updates the screen to display the weather from the given zipcode
@@ -73,25 +75,38 @@ public class Homework008Activity extends Activity {
     	// get the weather in json format
     	String query = String.format("http://query.yahooapis.com/v1/public/yql?format=json&q=select%%20*%%20from%%20rss%%20where%%20url=%%27http://xml.weather.yahoo.com/forecastrss/%s_f.xml%%27", zipcode);
         String weather = readWeather( query ); 
-        Log.e("here", weather);
+        
+        //Log.e("here", weather);
         
         try
         {
+        	// convert the string to a JSON object
         	JSONObject jsonObject = new JSONObject( weather );
         	
         	JSONObject item = jsonObject.getJSONObject("query").getJSONObject("results").getJSONObject("item");
         	JSONObject condition = item.getJSONObject("condition");
         	JSONArray forcast_array = item.getJSONArray("forecast");
-        	Log.i("here", condition.getString("temp"));
+        	//Log.i("here", condition.getString("temp"));
         	
-        	current_condition.setText(condition.getString("text"));
-        	current_temp.setText(condition.getString("temp"));
+        	// update the title, includes the location
         	title.setText( item.getString("title"));
         	
-        	forcast.loadData(item.getString("description"), "text/html", null);
+        	// update the condition eg. cloudy 
+        	current_condition.setText(condition.getString("text"));
+        	
+        	// update the current temperature
+        	current_temp.setText(condition.getString("temp"));
+        	
+        	// convert from fahrenhite to celsius
+        	int celsius = (int) ((5.0/9.0)* ((condition.getInt("temp")) - 32));
+        	current_temp_celcius.setText(Integer.toString(celsius));
+        	
+        	// this will load the webview of the description 
+        	forecast.loadData(item.getString("description").split("<br />")[0], "text/html", null);
         	
         	LayoutInflater inflater = getLayoutInflater();
         	TableLayout forecast_table = (TableLayout) findViewById(R.id.forcast_table);
+        	
         	// fill in the forcast table
         	for( int i = 0; i < forcast_array.length(); ++i )
         	{
