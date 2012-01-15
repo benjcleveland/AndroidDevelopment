@@ -7,5 +7,7 @@
     <string name="go_button">Go</string>
     <string name="source">View Source</string>
     <string name="urlstart">http://</string>
+    <string name="loading_text">Downloading, please wait...</string>
+    <string name="default_url">http://www.google.com</string>
 
 </resources>

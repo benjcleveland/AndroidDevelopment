@@ -59,9 +59,13 @@ public class Homework007Activity extends Activity {
 			}
 		});
 
+		url.setText(R.string.default_url);
+		
+		webview.requestFocus();
+		
 		// load the default url
-		webview.loadUrl("http://www.google.com");
-
+		webview.loadUrl(getString(R.string.default_url));
+		
 		// use our webview client
 		webview.setWebViewClient(new myWebViewClient());
 
@@ -91,10 +95,12 @@ public class Homework007Activity extends Activity {
 		// don't worry if the user has not entered anything into the url edit
 		// text
 		webview.loadUrl(url.getText().toString());
-
+		
 		// hide the onscreen keyboard
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(url.getWindowToken(), 0);
+	
+		webview.requestFocus();
 	}
 
 	// override the back button so we can navigate back
