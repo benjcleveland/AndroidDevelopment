@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -26,6 +27,7 @@ import android.view.View.OnKeyListener;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -74,14 +76,60 @@ public class Homework008Activity extends Activity {
     {
     	// get the weather in json format
     	String query = String.format("http://query.yahooapis.com/v1/public/yql?format=json&q=select%%20*%%20from%%20rss%%20where%%20url=%%27http://xml.weather.yahoo.com/forecastrss/%s_f.xml%%27", zipcode);
-        String weather = readWeather( query ); 
-        
-        //Log.e("here", weather);
-        
+        //String weather = readWeather( query ); 
+        LoadWeatherTask task = new LoadWeatherTask();
+        task.execute(new String[]{ query });
+    }
+    
+	// Ansyc task for getting the web page source
+	private class LoadWeatherTask extends AsyncTask<String, Void, String> {
+		@Override
+		protected String doInBackground(String... params) {
+			String page_source = "";
+			
+			// loop through all the given urls - there should only be one
+			for (String url : params) {
+				// create the client and the request 
+				HttpClient client = new DefaultHttpClient();
+				HttpGet request = new HttpGet(url);
+				
+				try {
+					// execute the request
+					HttpResponse response = client.execute(request);
+
+					// get the response
+					HttpEntity entity = response.getEntity();
+					if (entity != null) {
+						// create a string with the results
+						InputStream instream = entity.getContent();
+						BufferedReader br = new BufferedReader(
+								new InputStreamReader(instream), 8192);
+						String line = "";
+						StringBuilder sb = new StringBuilder();
+						while ((line = br.readLine()) != null) {
+							// append the line
+							sb.append(line + "\n");
+						}
+						instream.close();
+						page_source += sb.toString();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			// return the source as a string 
+			return page_source;
+		}
+
+		// update the UI now that we have the data we want
+		@Override
+		protected void onPostExecute( String result )
+		{
+			 
         try
         {
         	// convert the string to a JSON object
-        	JSONObject jsonObject = new JSONObject( weather );
+        	JSONObject jsonObject = new JSONObject( result );
         	
         	JSONObject item = jsonObject.getJSONObject("query").getJSONObject("results").getJSONObject("item");
         	JSONObject condition = item.getJSONObject("condition");
@@ -140,35 +188,7 @@ public class Homework008Activity extends Activity {
         {
         	e.printStackTrace();
         }
-    }
     
-    // get the source for the given url
- 	private String readWeather(String url) {
- 		String page_source = "";
- 		try {
- 			HttpClient client = new DefaultHttpClient();
- 			HttpGet request = new HttpGet();
- 			request.setURI(new URI(url));
- 			HttpResponse response = client.execute(request);
-
- 			HttpEntity entity = response.getEntity();
- 			if (entity != null) {
- 				InputStream instream = entity.getContent();
- 				BufferedReader br = new BufferedReader(new InputStreamReader(
- 						instream));
- 				StringBuilder sb = new StringBuilder();
- 				String line = "";
- 				while ((line = br.readLine()) != null) {
- 					sb.append(line + "\n");
- 				}
- 				instream.close();
- 				page_source = sb.toString();
- 			}
- 		} catch (IOException e) {
- 			e.printStackTrace();
- 		} catch (URISyntaxException e) {
- 			e.printStackTrace();
- 		}
- 		return page_source;
- 	}
+		}
+	}
 }
