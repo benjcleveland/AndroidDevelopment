@@ -17,7 +17,7 @@ public class TaskContentProvider extends ContentProvider {
 	private static final String DATABASE_NAME = "tasks";
 	private static final int DATABASE_VERSION = 1; 
 	
-	public static final String AUTHORITY = "edu.washington.cleveb.providers.TaskContentProvider";
+	public static final String AUTHORITY = "edu.washington.cleveb.TaskContentProvider";
 	
 	private static DatabaseHelper databaseHelp;
 	
@@ -98,7 +98,7 @@ public class TaskContentProvider extends ContentProvider {
 		// create the task database
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL("CREATE TEABLE " + TASK_TABLE_NAME  + " " + Tasks.TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT " + Tasks.TASK_NAME + " VARCHAR");
+			db.execSQL("CREATE TABLE " + TASK_TABLE_NAME  + " (" + Tasks.TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Tasks.TASK_NAME + " VARCHAR);");
 		}
 
 		// upcrate the database as needed

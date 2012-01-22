@@ -18,6 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider android:authorities="edu.washington.cleveb.TaskContentProvider" android:name="edu.washington.cleveb.TaskContentProvider"></provider>
     </application>
 
 </manifest>
