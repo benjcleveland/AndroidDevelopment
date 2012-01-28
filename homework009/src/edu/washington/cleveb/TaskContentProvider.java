@@ -15,17 +15,18 @@ public class TaskContentProvider extends ContentProvider {
 
 	private static final String TASK_TABLE_NAME = "task_table";
 	private static final String DATABASE_NAME = "tasks";
-	private static final int DATABASE_VERSION = 1; 
-	
+	private static final int DATABASE_VERSION = 1;
+
 	public static final String AUTHORITY = "edu.washington.cleveb.TaskContentProvider";
-	
+
 	private static DatabaseHelper databaseHelp;
-	
+
 	// create the content provider
 	@Override
 	public boolean onCreate() {
 		// create a database helper
-		databaseHelp = new DatabaseHelper(getContext(), DATABASE_NAME, null, DATABASE_VERSION );
+		databaseHelp = new DatabaseHelper(getContext(), DATABASE_NAME, null,
+				DATABASE_VERSION);
 		return (databaseHelp == null) ? false : true;
 	}
 
@@ -36,11 +37,12 @@ public class TaskContentProvider extends ContentProvider {
 		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 		SQLiteDatabase db = databaseHelp.getReadableDatabase();
 		qb.setTables(TASK_TABLE_NAME);
-		
+
 		// Create a cursor from the query
-		Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+		Cursor c = qb.query(db, projection, selection, selectionArgs, null,
+				null, sortOrder);
 		c.setNotificationUri(getContext().getContentResolver(), uri);
-		
+
 		return c;
 	}
 
@@ -55,8 +57,8 @@ public class TaskContentProvider extends ContentProvider {
 	public Uri insert(Uri uri, ContentValues values) {
 		SQLiteDatabase db = databaseHelp.getWritableDatabase();
 		long rowId = db.insert(TASK_TABLE_NAME, "name", values);
-		
-		if( rowId > 0){	// successfully inserted the task into the database
+
+		if (rowId > 0) { // successfully inserted the task into the database
 			Uri taskUri = ContentUris.withAppendedId(Tasks.CONTENT_URI, rowId);
 			getContext().getContentResolver().notifyChange(taskUri, null);
 			return taskUri;
@@ -68,9 +70,9 @@ public class TaskContentProvider extends ContentProvider {
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		SQLiteDatabase db = databaseHelp.getWritableDatabase();
-		
+
 		int count = db.delete(TASK_TABLE_NAME, selection, selectionArgs);
-		
+
 		getContext().getContentResolver().notifyChange(uri, null);
 		return count;
 	}
@@ -80,9 +82,10 @@ public class TaskContentProvider extends ContentProvider {
 	public int update(Uri uri, ContentValues values, String selection,
 			String[] selectionArgs) {
 		SQLiteDatabase db = databaseHelp.getWritableDatabase();
-		
-		int count = db.update(TASK_TABLE_NAME, values, selection, selectionArgs);
-		
+
+		int count = db
+				.update(TASK_TABLE_NAME, values, selection, selectionArgs);
+
 		getContext().getContentResolver().notifyChange(uri, null);
 		return count;
 	}
@@ -98,7 +101,9 @@ public class TaskContentProvider extends ContentProvider {
 		// create the task database
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			db.execSQL("CREATE TABLE " + TASK_TABLE_NAME  + " (" + Tasks.TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + Tasks.TASK_NAME + " VARCHAR);");
+			db.execSQL("CREATE TABLE " + TASK_TABLE_NAME + " (" + Tasks.TASK_ID
+					+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + Tasks.TASK_NAME
+					+ " VARCHAR);");
 		}
 
 		// upcrate the database as needed

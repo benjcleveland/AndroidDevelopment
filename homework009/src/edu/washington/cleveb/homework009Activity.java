@@ -17,11 +17,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-public class homework009Activity extends ListActivity implements OnClickListener {
+public class homework009Activity extends ListActivity implements
+		OnClickListener {
 	private static SimpleCursorAdapter cursorAdapter;
 	private static Button addButton;
 	private static EditText newTaskText;
-	
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class homework009Activity extends ListActivity implements OnClickListener
 		Cursor c = managedQuery(Tasks.CONTENT_URI, new String[] {
 				Tasks.TASK_ID, Tasks.TASK_NAME }, null, null, null);
 		c.moveToFirst();
-		
+
 		// create a simple cursor adapter
 		cursorAdapter = new SimpleCursorAdapter(this,
 				android.R.layout.simple_list_item_1, c,
@@ -41,10 +42,10 @@ public class homework009Activity extends ListActivity implements OnClickListener
 
 		// set the list adapter
 		setListAdapter(cursorAdapter);
-		
+
 		// save the edit text view
 		newTaskText = (EditText) findViewById(R.id.task_text);
-		
+
 		// get the button
 		addButton = (Button) findViewById(R.id.addButton);
 		addButton.setOnClickListener(this);
@@ -61,7 +62,7 @@ public class homework009Activity extends ListActivity implements OnClickListener
 			public void onClick(DialogInterface dialog, int which) {
 				Cursor c = cursorAdapter.getCursor();
 				int id = c.getInt(c.getColumnIndex(Tasks.TASK_ID));
-				
+
 				switch (which) {
 				case 0:
 					// create an intent to edit the task
@@ -77,7 +78,7 @@ public class homework009Activity extends ListActivity implements OnClickListener
 				}
 			}
 		});
-		
+
 		// show the dialog
 		builder.create().show();
 		super.onListItemClick(l, v, position, id);
@@ -86,19 +87,18 @@ public class homework009Activity extends ListActivity implements OnClickListener
 	// handle adding a task to the list
 	public void onClick(View v) {
 		String task = newTaskText.getText().toString();
-		
+
 		// make sure there is a string
-		if( task.equals("") == false )
-		{
+		if (task.equals("") == false) {
 			// add the task
 			ContentValues values = new ContentValues();
 			values.put(Tasks.TASK_NAME, task);
 			getContentResolver().insert(Tasks.CONTENT_URI, values);
-			
+
 			// hide the on screen keyboard
 			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			imm.hideSoftInputFromWindow(newTaskText.getWindowToken(), 0);
-			
+
 			// clear the edit text
 			newTaskText.setText("");
 		}
