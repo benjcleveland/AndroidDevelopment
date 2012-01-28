@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <provider android:authorities="edu.washington.cleveb.TaskContentProvider" android:name="edu.washington.cleveb.TaskContentProvider"></provider>
+        <activity android:name="edu.washington.cleveb.EditTask"></activity>
     </application>
 
 </manifest>

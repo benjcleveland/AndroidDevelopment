@@ -3,5 +3,8 @@
 
     <string name="hello">Hello World, homework009Activity!</string>
     <string name="app_name">Homework 009</string>
+    <string name="add_task">Add Task</string>
+    <string name="curr_task">&quot;Update task name: &quot;</string>
+    <string name="update_button">Update</string>
 
 </resources>
