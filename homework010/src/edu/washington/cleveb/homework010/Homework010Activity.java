@@ -7,13 +7,15 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.view.OrientationListener;
+import android.util.Log;
 import android.widget.TextView;
 
 public class Homework010Activity extends Activity implements SensorEventListener {
 	
+	private static final String TAG = Homework010Activity.class.getSimpleName();
 	private static Sensor mOrientationSensor;
 	private static SensorManager mSensorManager;
+	private static CompassView mCompassView;
 	
 	private static TextView mOrientationText;
 	
@@ -23,13 +25,17 @@ public class Homework010Activity extends Activity implements SensorEventListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        // get the senor manager
+        Log.e(TAG, "starting loading it works!!");
+        // get the sensor manager
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         
         // get the orienation sensor
         // use mSensorManager.getOrientation() instead?
         mOrientationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION); 
         mOrientationText = (TextView) findViewById(R.id.orientationText);
+        mCompassView = (CompassView) findViewById(R.id.compassView1);
+        
+        Log.v(TAG, "done loading");
     }
 
     @Override
@@ -48,19 +54,22 @@ public class Homework010Activity extends Activity implements SensorEventListener
 	
 	public void onSensorChanged(SensorEvent event) {
 		// display the values for the orientation sensor on the screen
+		float[] rot = new float[9];
+		float[] orien = new float[3]; 
+		SensorManager.getOrientation(rot, orien);
 		StringBuilder sb = new StringBuilder();
 		sb.append("azimuth: ");
-		sb.append(event.values[0]);
+		sb.append(rot[0]);
 		sb.append("\npitch: ");
 		sb.append(event.values[1]);
 		sb.append("\nroll: ");
 		sb.append(event.values[2]);
 		// update the text on the screen
 		mOrientationText.setText(sb.toString());
+		mCompassView.setRot(-event.values[0]);
 	}
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
-		
 	}
 }
