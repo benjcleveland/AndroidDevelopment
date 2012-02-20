@@ -11,48 +11,57 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-public class Homework010Activity extends Activity implements SensorEventListener {
-	
+public class Homework010Activity extends Activity implements
+		SensorEventListener {
+
 	private static final String TAG = Homework010Activity.class.getSimpleName();
 	private static Sensor mOrientationSensor;
 	private static SensorManager mSensorManager;
 	private static CompassView mCompassView;
-	
-	private static TextView mOrientationText;
-	
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-        
-        Log.e(TAG, "starting loading it works!!");
-        // get the sensor manager
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        
-        // get the orienation sensor
-        // use mSensorManager.getOrientation() instead?
-        mOrientationSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION); 
-        mOrientationText = (TextView) findViewById(R.id.orientationText);
-        mCompassView = (CompassView) findViewById(R.id.compassView1);
-        
-        Log.v(TAG, "done loading");
-    }
 
-    @Override
+	private static TextView mOrientationText;
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);
+
+		Log.e(TAG, "starting loading it works!!");
+		// get the sensor manager
+		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+		// get the orienation sensor
+		// use mSensorManager.getOrientation() instead?
+		mOrientationSensor = mSensorManager
+				.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+		mOrientationText = (TextView) findViewById(R.id.orientationText);
+		mCompassView = (CompassView) findViewById(R.id.compassView1);
+
+		// hide debug info
+		mOrientationText.setVisibility(TextView.GONE);
+
+		Log.v(TAG, "done loading");
+		Log.v(TAG, "test tesst test");
+	}
+
+	@Override
 	protected void onResume() {
-    	// register the sensor listener
-    	mSensorManager.registerListener(this, mOrientationSensor, SensorManager.SENSOR_DELAY_NORMAL);
+		Log.v(TAG, "on resume");
+		// register the sensor listener
+		mSensorManager.registerListener(this, mOrientationSensor,
+				SensorManager.SENSOR_DELAY_NORMAL);
 		super.onResume();
 	}
 
 	@Override
 	protected void onPause() {
+		Log.v(TAG, "on pause");
 		// unregister the sensor listener
 		mSensorManager.unregisterListener(this);
 		super.onPause();
 	}
-	
+
 	public void onSensorChanged(SensorEvent event) {
 		// display the values for the orientation sensor on the screen
 		StringBuilder sb = new StringBuilder();
