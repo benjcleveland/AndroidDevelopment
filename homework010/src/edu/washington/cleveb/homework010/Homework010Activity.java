@@ -2,6 +2,7 @@ package edu.washington.cleveb.homework010;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -54,19 +55,16 @@ public class Homework010Activity extends Activity implements SensorEventListener
 	
 	public void onSensorChanged(SensorEvent event) {
 		// display the values for the orientation sensor on the screen
-		float[] rot = new float[9];
-		float[] orien = new float[3]; 
-		SensorManager.getOrientation(rot, orien);
 		StringBuilder sb = new StringBuilder();
 		sb.append("azimuth: ");
-		sb.append(rot[0]);
+		sb.append(event.values[0]);
 		sb.append("\npitch: ");
 		sb.append(event.values[1]);
 		sb.append("\nroll: ");
 		sb.append(event.values[2]);
 		// update the text on the screen
 		mOrientationText.setText(sb.toString());
-		mCompassView.setRot(-event.values[0]);
+		mCompassView.setRot(event.values[0]);
 	}
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
