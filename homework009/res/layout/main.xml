@@ -3,16 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
-
+
     <EditText
         android:id="@+id/task_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="text" />
 
     <Button
         android:id="@+id/addButton"

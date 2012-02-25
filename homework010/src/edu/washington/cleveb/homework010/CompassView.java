@@ -47,6 +47,7 @@ public class CompassView extends SurfaceView implements SurfaceHolder.Callback {
 		mRotation = rotation;
 	}
 
+	// this thread will handle updating and drawing the compas
 	private class drawingThread extends AsyncTask<String, Void, String> {
 		private SurfaceHolder mSurfaceHolder;
 		private Path mArrow = new Path();
@@ -134,7 +135,7 @@ public class CompassView extends SurfaceView implements SurfaceHolder.Callback {
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		Log.v(TAG, "surface destroy");
-		// cancle the drawing thread
+		// cancel the drawing thread
 		mDrawingThread.cancel(true);
 	}
 }

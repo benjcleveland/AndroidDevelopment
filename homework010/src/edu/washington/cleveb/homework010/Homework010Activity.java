@@ -2,7 +2,6 @@ package edu.washington.cleveb.homework010;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -62,6 +61,7 @@ public class Homework010Activity extends Activity implements
 		super.onPause();
 	}
 
+	// handle the on sensor changed event
 	public void onSensorChanged(SensorEvent event) {
 		// display the values for the orientation sensor on the screen
 		StringBuilder sb = new StringBuilder();
